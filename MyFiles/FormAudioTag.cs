@@ -139,8 +139,19 @@ namespace MyFiles
         private void listView1_ItemActivate(object sender, EventArgs e)
         {
             var filename = Path.Combine(comboBox1.Text, listView1.SelectedItems[0].Text);
-            var formPlayer = new FormPlayer(filename);
-            formPlayer.ShowDialog(this);
+            //if it is directory,go into
+            if (Directory.Exists(filename))
+            {
+                comboBox1.Text = filename;
+                LoadDir(true);
+                return;
+            }
+
+            using (var formPlayer = new FormPlayer(filename))
+            {
+                formPlayer.StartPosition = FormStartPosition.CenterParent;               
+                formPlayer.ShowDialog(this);
+            }
 
         }
     }

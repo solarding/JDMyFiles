@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPlayer));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.labelNowTime = new System.Windows.Forms.Label();
             this.volumeSlider1 = new NAudio.Gui.VolumeSlider();
@@ -58,10 +59,10 @@
             // 
             // volumeSlider1
             // 
-            this.volumeSlider1.Location = new System.Drawing.Point(354, 39);
+            this.volumeSlider1.Location = new System.Drawing.Point(360, 39);
             this.volumeSlider1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.volumeSlider1.Name = "volumeSlider1";
-            this.volumeSlider1.Size = new System.Drawing.Size(134, 46);
+            this.volumeSlider1.Size = new System.Drawing.Size(128, 40);
             this.volumeSlider1.TabIndex = 3;
             this.volumeSlider1.VolumeChanged += new System.EventHandler(this.OnVolumeSliderChanged);
             // 
@@ -77,7 +78,7 @@
             // comboBoxOutputDriver
             // 
             this.comboBoxOutputDriver.FormattingEnabled = true;
-            this.comboBoxOutputDriver.Location = new System.Drawing.Point(214, 13);
+            this.comboBoxOutputDriver.Location = new System.Drawing.Point(426, 1);
             this.comboBoxOutputDriver.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.comboBoxOutputDriver.Name = "comboBoxOutputDriver";
             this.comboBoxOutputDriver.Size = new System.Drawing.Size(79, 25);
@@ -86,20 +87,22 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(315, 39);
+            this.label1.Image = global::JD.MyFiles.Properties.Resources.speaker;
+            this.label1.Location = new System.Drawing.Point(324, 39);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 46);
+            this.label1.Size = new System.Drawing.Size(35, 40);
             this.label1.TabIndex = 9;
             this.label1.Text = "    ";
             // 
             // buttonOpen
             // 
-            this.buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonOpen.Image = global::JD.MyFiles.Properties.Resources.musik;
             this.buttonOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonOpen.Location = new System.Drawing.Point(225, 39);
             this.buttonOpen.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(75, 46);
+            this.buttonOpen.Size = new System.Drawing.Size(75, 40);
             this.buttonOpen.TabIndex = 6;
             this.buttonOpen.Text = "Open";
             this.buttonOpen.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -109,24 +112,27 @@
             // buttonStop
             // 
             this.buttonStop.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonStop.Image = global::JD.MyFiles.Properties.Resources.halt;
             this.buttonStop.Location = new System.Drawing.Point(178, 39);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(41, 46);
+            this.buttonStop.Size = new System.Drawing.Size(40, 40);
             this.buttonStop.TabIndex = 5;
             this.buttonStop.UseVisualStyleBackColor = false;
             this.buttonStop.Click += new System.EventHandler(this.OnButtonStopClick);
             // 
             // buttonPlay
             // 
-            this.buttonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPlay.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonPlay.Image = global::JD.MyFiles.Properties.Resources.play_taste;
             this.buttonPlay.Location = new System.Drawing.Point(131, 39);
             this.buttonPlay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonPlay.Name = "buttonPlay";
-            this.buttonPlay.Size = new System.Drawing.Size(41, 46);
+            this.buttonPlay.Size = new System.Drawing.Size(40, 40);
             this.buttonPlay.TabIndex = 4;
-            this.buttonPlay.UseVisualStyleBackColor = true;
+            this.buttonPlay.UseVisualStyleBackColor = false;
             this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
             // 
             // FormPlayer
@@ -143,10 +149,11 @@
             this.Controls.Add(this.comboBoxOutputDriver);
             this.Controls.Add(this.labelNowTime);
             this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormPlayer";
-            this.Text = "FormPlayer";
+            this.Text = "Player";
             this.ResumeLayout(false);
             this.PerformLayout();
 

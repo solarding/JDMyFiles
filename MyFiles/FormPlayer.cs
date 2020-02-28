@@ -156,28 +156,8 @@ namespace JD.MyFiles
 
         private void OnButtonOpenClick(object sender, EventArgs e)
         {
-            fileName = SelectInputFile();
+            fileName = SelectInputFile()??fileName;
         }
 
-        private void OnMp3RepositionTestClick(object sender, EventArgs e)
-        {
-            var filename = SelectInputFile();
-            if (filename == null) return;
-            var wo = new WaveOut();
-            var af = new AudioFileReader(filename);
-            wo.Init(af);
-            var f = new Form();
-            var b = new Button() { Text = "Play" };
-            b.Click += (s, a) => wo.Play();
-            var b2 = new Button() { Text = "Stop", Left = b.Right };
-            b2.Click += (s, a) => wo.Stop();
-            var b3 = new Button { Text = "Rewind", Left = b2.Right };
-            b3.Click += (s, a) => af.Position = 0;
-            f.FormClosed += (s, a) => { wo.Dispose(); af.Dispose(); };
-            f.Controls.Add(b);
-            f.Controls.Add(b2);
-            f.Controls.Add(b3);
-            f.ShowDialog(this);
-        }
     }
 }
