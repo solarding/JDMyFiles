@@ -42,6 +42,7 @@
             // 
             // listView1
             // 
+            this.listView1.Activation = System.Windows.Forms.ItemActivation.TwoClick;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColumnHeader1});
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -54,6 +55,7 @@
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
             // 
             // ColumnHeader1
             // 

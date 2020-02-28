@@ -135,5 +135,13 @@ namespace MyFiles
             }
             Cursor = Cursors.Default;
         }
+
+        private void listView1_ItemActivate(object sender, EventArgs e)
+        {
+            var filename = Path.Combine(comboBox1.Text, listView1.SelectedItems[0].Text);
+            var formPlayer = new FormPlayer(filename);
+            formPlayer.ShowDialog(this);
+
+        }
     }
 }
