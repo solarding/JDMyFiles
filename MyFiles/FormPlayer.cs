@@ -19,6 +19,7 @@ namespace JD.MyFiles
         public FormPlayer(string SongFileName = null)
         {
             InitializeComponent();
+            wavePlayer = CreateWavePlayer();
             EnableButtons(false);
             PopulateOutputDriverCombo();
             Disposed += SimplePlaybackPanel_Disposed;           
@@ -41,6 +42,7 @@ namespace JD.MyFiles
             {
                 labelNowTime.Text = FormatTimeSpan(audioFileReader.CurrentTime) +  " : " + FormatTimeSpan(audioFileReader.TotalTime);
                 labelSongName.Text = fileName;
+                trackBar1.Value = (int)audioFileReader.CurrentTime.TotalSeconds;
             }
         }
 
@@ -83,12 +85,16 @@ namespace JD.MyFiles
 
         private void BeginPlayback(string filename)
         {
-            wavePlayer = CreateWavePlayer();
-            audioFileReader = new AudioFileReader(filename);
-            audioFileReader.Volume = volumeSlider1.Volume;
+            audioFileReader = new AudioFileReader(filename)
+            {
+                Volume = volumeSlider1.Volume,    
+                CurrentTime = TimeSpan.FromSeconds(10)
+            };           
+            
             wavePlayer.Init(audioFileReader);
+            trackBar1.Maximum = (int)audioFileReader.TotalTime.TotalSeconds;
             wavePlayer.PlaybackStopped += OnPlaybackStopped;
-            wavePlayer.Play();
+            wavePlayer.Play(); 
             EnableButtons(true);
             timer1.Enabled = true; // timer for updating current time label
         }
@@ -156,8 +162,18 @@ namespace JD.MyFiles
 
         private void OnButtonOpenClick(object sender, EventArgs e)
         {
-            fileName = SelectInputFile()??fileName;
+            fileName = SelectInputFile() ?? fileName;
         }
 
+       
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {           
+            Application.DoEvents();
+            timer1.Stop();
+            wavePlayer.Stop();
+            audioFileReader.CurrentTime = TimeSpan.FromSeconds(trackBar1.Value);
+            wavePlayer.Play();
+            timer1.Start();
+        }
     }
 }
