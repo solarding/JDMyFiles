@@ -116,6 +116,7 @@
     <None Include="Resources\speaker.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\m4a-file-format.png" />
     <Content Include="suche.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

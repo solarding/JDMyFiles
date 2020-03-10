@@ -1,14 +1,7 @@
 ﻿using JD.MyFiles;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TagLib;
 
@@ -16,7 +9,6 @@ namespace MyFiles
 {
     public partial class Form1 : Form
     {       
-        readonly IntPtr hSysImgList;
         public Form1()
         {
             InitializeComponent();
@@ -59,27 +51,23 @@ namespace MyFiles
             Cursor = Cursors.WaitCursor;
             if (readTag) GenerateColumns(true);
             listView1.Items.Clear();
-            // Get the items from the file system, and add each of them to the ListView,
-            // complete with their corresponding name and icon indices.
+            listView1.BeginUpdate();
             var files = new DirectoryInfo(comboBox1.Text).GetFiles();
-            foreach (var file in files)       {                        
-
-                var item = listView1.Items.Add(file.Name, file.Extension);
-                if (readTag)
+            foreach (var file in files)
+            {
+                var item = listView1.Items.Add(file.Name, file.Extension.Substring(1).ToLower());
+                if (!readTag)  continue;  
+                
+                try
                 {
-                    try
-                    {
-                        var song = TagLib.File.Create(file.FullName, ReadStyle.PictureLazy);
-                        if (!(song is TagLib.Mpeg.AudioFile)) continue;
-                        item.SubItems.Add(song.Tag.Title);
-                        item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault());
-                    }
-                    catch { }
+                    var song = TagLib.File.Create(file.FullName, ReadStyle.PictureLazy);                    
+                    item.SubItems.Add(song.Tag.Title);
+                    item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault()??song.Tag.FirstPerformer);
                 }
-
+                catch { }
             }
+            listView1.EndUpdate();
             Cursor = Cursors.Default;
-
         }
 
         private void btnTags_Click(object sender, EventArgs e)

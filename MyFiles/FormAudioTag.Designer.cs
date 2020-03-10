@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -39,6 +40,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.btnFix = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
             // 
             // listView1
@@ -53,6 +55,7 @@
             this.listView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(959, 420);
+            this.listView1.SmallImageList = this.imageList1;
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -71,7 +74,7 @@
             this.comboBox1.Location = new System.Drawing.Point(14, 13);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(349, 25);
+            this.comboBox1.Size = new System.Drawing.Size(349, 28);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.Text = "C:\\";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
@@ -103,7 +106,7 @@
             // 
             this.txtFormat.Location = new System.Drawing.Point(657, 15);
             this.txtFormat.Name = "txtFormat";
-            this.txtFormat.Size = new System.Drawing.Size(185, 23);
+            this.txtFormat.Size = new System.Drawing.Size(185, 27);
             this.txtFormat.TabIndex = 5;
             this.txtFormat.Text = "{trackno} - {title}";
             // 
@@ -112,7 +115,7 @@
             this.radioButton1.AutoSize = true;
             this.radioButton1.Location = new System.Drawing.Point(657, 47);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(64, 21);
+            this.radioButton1.Size = new System.Drawing.Size(77, 24);
             this.radioButton1.TabIndex = 6;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "繁->简";
@@ -123,7 +126,7 @@
             this.radioButton2.AutoSize = true;
             this.radioButton2.Location = new System.Drawing.Point(657, 75);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(64, 21);
+            this.radioButton2.Size = new System.Drawing.Size(77, 24);
             this.radioButton2.TabIndex = 7;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "简->繁";
@@ -139,9 +142,16 @@
             this.btnFix.UseVisualStyleBackColor = true;
             this.btnFix.Click += new System.EventHandler(this.btnFix_Click);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "mp3");
+            this.imageList1.Images.SetKeyName(1, "m4a");
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 543);
             this.Controls.Add(this.btnFix);
@@ -174,6 +184,7 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button btnFix;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 
