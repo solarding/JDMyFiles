@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D9E4DA2C-2F25-4372-8617-449EE589FB17}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>JD.MyFiles</RootNamespace>
-    <AssemblyName>JDMyFiles</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <RootNamespace>JD.MF</RootNamespace>
+    <AssemblyName>MFbyJD</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -34,6 +34,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>suche.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NAudio, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">

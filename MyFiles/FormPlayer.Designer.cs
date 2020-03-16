@@ -1,4 +1,4 @@
-﻿namespace JD.MyFiles
+﻿namespace JD.MF
 {
     partial class FormPlayer
     {
@@ -87,7 +87,7 @@
             // 
             // label1
             // 
-            this.label1.Image = global::JD.MyFiles.Properties.Resources.speaker;
+            this.label1.Image = global::JD.MF.Properties.Resources.speaker;
             this.label1.Location = new System.Drawing.Point(324, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 40);
@@ -97,7 +97,7 @@
             // buttonOpen
             // 
             this.buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonOpen.Image = global::JD.MyFiles.Properties.Resources.musik;
+            this.buttonOpen.Image = global::JD.MF.Properties.Resources.musik;
             this.buttonOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonOpen.Location = new System.Drawing.Point(225, 39);
             this.buttonOpen.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -113,7 +113,7 @@
             // 
             this.buttonStop.BackColor = System.Drawing.SystemColors.Control;
             this.buttonStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonStop.Image = global::JD.MyFiles.Properties.Resources.halt;
+            this.buttonStop.Image = global::JD.MF.Properties.Resources.halt;
             this.buttonStop.Location = new System.Drawing.Point(178, 39);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonStop.Name = "buttonStop";
@@ -126,7 +126,7 @@
             // 
             this.buttonPlay.BackColor = System.Drawing.SystemColors.Control;
             this.buttonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonPlay.Image = global::JD.MyFiles.Properties.Resources.play_taste;
+            this.buttonPlay.Image = global::JD.MF.Properties.Resources.play_taste;
             this.buttonPlay.Location = new System.Drawing.Point(131, 39);
             this.buttonPlay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonPlay.Name = "buttonPlay";

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JD.MyFiles
+namespace JD.MF
 {
     internal static class ZH
     {

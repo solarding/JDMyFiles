@@ -80,7 +80,7 @@
             // btnLookupFolder
             // 
             this.btnLookupFolder.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnLookupFolder.Image = global::JD.MyFiles.Properties.Resources.lupe_suchen;
+            this.btnLookupFolder.Image = global::JD.MF.Properties.Resources.lupe_suchen;
             this.btnLookupFolder.Location = new System.Drawing.Point(369, 11);
             this.btnLookupFolder.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnLookupFolder.Name = "btnLookupFolder";
