@@ -1,18 +1,12 @@
 ﻿using JD.MF;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TagLib;
 
-namespace MyFiles
+namespace JD
 {
     public partial class Form1 : Form
     {
@@ -114,7 +108,7 @@ namespace MyFiles
         private void btnFix_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            uint trackNr;
+            
             foreach (var xitem in listView1.Items)
             {
                 var item = (ListViewItem)xitem;
@@ -123,11 +117,7 @@ namespace MyFiles
                 {
                     var song = TagLib.File.Create(file, ReadStyle.PictureLazy);
                     var s = Path.GetFileNameWithoutExtension(file);
-                    var ss = s.Split('-');
-                    if (uint.TryParse(ss[0].Trim(), out trackNr)) song.Tag.Track = trackNr;
-                    if (radioButton1.Checked) ss[1] = ZH.ToSimplified(ss[1]);
-                    if (radioButton2.Checked) ss[1] = ZH.ToTraditional(ss[1]);
-                    song.Tag.Title = ss[1].Trim();
+                    AudioTagUtil.ParseFilename(s, song.Tag);                   
                     song.Save();
                     Application.DoEvents();
                 }

@@ -1,4 +1,4 @@
-﻿namespace MyFiles
+﻿namespace JD
 {
     partial class Form1
     {
@@ -35,9 +35,6 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnLookupFolder = new System.Windows.Forms.Button();
             this.btnTags = new System.Windows.Forms.Button();
-            this.txtFormat = new System.Windows.Forms.TextBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.btnFix = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -49,10 +46,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(0, 123);
+            this.listView1.Location = new System.Drawing.Point(0, 65);
             this.listView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(959, 420);
+            this.listView1.Size = new System.Drawing.Size(959, 478);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -99,36 +96,6 @@
             this.btnTags.UseVisualStyleBackColor = true;
             this.btnTags.Click += new System.EventHandler(this.btnTags_Click);
             // 
-            // txtFormat
-            // 
-            this.txtFormat.Location = new System.Drawing.Point(657, 15);
-            this.txtFormat.Name = "txtFormat";
-            this.txtFormat.Size = new System.Drawing.Size(185, 23);
-            this.txtFormat.TabIndex = 5;
-            this.txtFormat.Text = "{trackno} - {title}";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(657, 47);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(64, 21);
-            this.radioButton1.TabIndex = 6;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "繁->简";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(657, 75);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(64, 21);
-            this.radioButton2.TabIndex = 7;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "简->繁";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
             // btnFix
             // 
             this.btnFix.Location = new System.Drawing.Point(576, 11);
@@ -145,9 +112,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 543);
             this.Controls.Add(this.btnFix);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.txtFormat);
             this.Controls.Add(this.btnTags);
             this.Controls.Add(this.btnLookupFolder);
             this.Controls.Add(this.comboBox1);
@@ -158,7 +122,6 @@
             this.Name = "Form1";
             this.Text = "Audio Tag";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -170,9 +133,6 @@
         private System.Windows.Forms.Button btnLookupFolder;
         private System.Windows.Forms.Button btnTags;
         private System.Windows.Forms.ColumnHeader ColumnHeader1;
-        private System.Windows.Forms.TextBox txtFormat;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Button btnFix;
     }
 }

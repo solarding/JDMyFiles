@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JD.MF
 {
-    internal static class ZH
+    public static class ZH
     {
         /// <summary>
         /// 中文字符工具类
@@ -40,6 +40,24 @@ namespace JD.MF
             String target = new String(' ', source.Length);
             int ret = LCMapString(LOCALE_SYSTEM_DEFAULT, LCMAP_TRADITIONAL_CHINESE, source, source.Length, target, source.Length);
             return target;
+        }
+
+        // / 转半角的函数(DBC case)
+        public static string ToDBC(string input)
+        {
+            input = input.Replace("【", "[").Replace("】", "]").Replace("＜","<").Replace("＞", ">");
+            char[] c = input.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                if (c[i] == 12288)
+                {
+                    c[i] = (char)32;
+                    continue;
+                }
+                if (c[i] > 65280 && c[i] < 65375)
+                    c[i] = (char)(c[i] - 65248);
+            }
+            return new string(c);
         }
     }
 }
