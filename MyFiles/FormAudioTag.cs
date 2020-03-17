@@ -3,34 +3,19 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TagLib;
 
 namespace JD
 {
     public partial class Form1 : Form
-    {
-        private NativeMethods.SHFILEINFO shfi = new NativeMethods.SHFILEINFO();
-        readonly IntPtr hSysImgList;
+    {       
         public Form1()
         {
             InitializeComponent();
-
-            comboBox1.Items.Add(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));           
-            
-            NativeMethods.SetWindowTheme(listView1.Handle, "Explorer", null);
-
-            //set Icons library 
-            hSysImgList = NativeMethods.SHGetFileInfo("", 0, ref shfi, (uint)Marshal.SizeOf(shfi), NativeMethods.SHGFI_SYSICONINDEX | NativeMethods.SHGFI_SMALLICON);
-
-            // Set the ListView control to use that image list.
-            IntPtr hOldImgList = NativeMethods.SendMessage(listView1.Handle, NativeMethods.LVM_SETIMAGELIST, NativeMethods.LVSIL_SMALL, hSysImgList);
-
-            // If the ListView control already had an image list, delete the old one.
-            if (hOldImgList != IntPtr.Zero)
-            {
-                NativeMethods.ImageList_Destroy(hOldImgList);
-            }
+            comboBox1.Items.Add(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));             
         }
 
         private void GenerateColumns(bool reset = false)
@@ -69,35 +54,23 @@ namespace JD
             Cursor = Cursors.WaitCursor;
             if (readTag) GenerateColumns(true);
             listView1.Items.Clear();
-            // Get the items from the file system, and add each of them to the ListView,
-            // complete with their corresponding name and icon indices.
-            string[] s = Directory.GetFileSystemEntries(comboBox1.Text);
-            foreach (string file in s)
+            listView1.BeginUpdate();
+            var files = new DirectoryInfo(comboBox1.Text).GetFiles();
+            foreach (var file in files)
             {
-                IntPtr himl = NativeMethods.SHGetFileInfo(file, 0, ref shfi, (uint)Marshal.SizeOf(shfi),
-                                                NativeMethods.SHGFI_DISPLAYNAME | NativeMethods.SHGFI_SYSICONINDEX | NativeMethods.SHGFI_SMALLICON);
-                if (himl != hSysImgList)
+                var item = listView1.Items.Add(file.Name, file.Extension.Substring(1).ToLower());
+                if (!readTag)  continue;  
+                
+                try
                 {
-                    // MessageBox.Show("WTF? " + file);
-                    listView1.Items.Add(Path.GetFileName(file), 0);
+                    var song = TagLib.File.Create(file.FullName, ReadStyle.PictureLazy);                    
+                    item.SubItems.Add(song.Tag.Title);
+                    item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault()??song.Tag.FirstPerformer);
                 }
-                else
-                {
-                    var item = listView1.Items.Add(shfi.szDisplayName, shfi.iIcon);   
-                    if (readTag)
-                    {
-                        try
-                        {
-                            var song = TagLib.File.Create(file, ReadStyle.PictureLazy);
-                            item.SubItems.Add(song.Tag.Title);
-                            item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault());                            
-                        }
-                        catch { }
-                    }
-                }
+                catch { }
             }
+            listView1.EndUpdate();
             Cursor = Cursors.Default;
-
         }
 
         private void btnTags_Click(object sender, EventArgs e)

@@ -39,6 +39,8 @@
             this.buttonOpen = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonPlay = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -53,7 +55,7 @@
             this.labelNowTime.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelNowTime.Location = new System.Drawing.Point(13, 48);
             this.labelNowTime.Name = "labelNowTime";
-            this.labelNowTime.Size = new System.Drawing.Size(95, 19);
+            this.labelNowTime.Size = new System.Drawing.Size(129, 23);
             this.labelNowTime.TabIndex = 0;
             this.labelNowTime.Text = "labelNowTime";
             // 
@@ -71,7 +73,7 @@
             this.labelSongName.AutoSize = true;
             this.labelSongName.Location = new System.Drawing.Point(15, 9);
             this.labelSongName.Name = "labelSongName";
-            this.labelSongName.Size = new System.Drawing.Size(101, 17);
+            this.labelSongName.Size = new System.Drawing.Size(125, 20);
             this.labelSongName.TabIndex = 8;
             this.labelSongName.Text = "labelSongName";
             // 
@@ -81,7 +83,7 @@
             this.comboBoxOutputDriver.Location = new System.Drawing.Point(426, 1);
             this.comboBoxOutputDriver.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.comboBoxOutputDriver.Name = "comboBoxOutputDriver";
-            this.comboBoxOutputDriver.Size = new System.Drawing.Size(79, 25);
+            this.comboBoxOutputDriver.Size = new System.Drawing.Size(79, 28);
             this.comboBoxOutputDriver.TabIndex = 2;
             this.comboBoxOutputDriver.Visible = false;
             // 
@@ -135,11 +137,24 @@
             this.buttonPlay.UseVisualStyleBackColor = false;
             this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
             // 
+            // trackBar1
+            // 
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBar1.Location = new System.Drawing.Point(12, 95);
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(476, 56);
+            this.trackBar1.TabIndex = 11;
+            this.trackBar1.TickFrequency = 10;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
             // FormPlayer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 106);
+            this.ClientSize = new System.Drawing.Size(502, 127);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelSongName);
             this.Controls.Add(this.buttonOpen);
@@ -154,6 +169,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormPlayer";
             this.Text = "Player";
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,5 +186,6 @@
         private System.Windows.Forms.Label labelSongName;
         private System.Windows.Forms.ComboBox comboBoxOutputDriver;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
