@@ -2,9 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TagLib;
 
@@ -91,12 +88,35 @@ namespace JD
                     var song = TagLib.File.Create(file, ReadStyle.PictureLazy);
                     var s = Path.GetFileNameWithoutExtension(file);
                     AudioTagUtil.ParseFilename(s, song.Tag);                   
-                    song.Save();
-                    Application.DoEvents();
+                    song.Save();                   
                 }
                 catch (Exception ex) { item.Remove(); }
             }
             Cursor = Cursors.Default;
+        }
+
+        private void bntFormatFN_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            foreach (var xitem in listView1.Items)
+            {
+                var item = (ListViewItem)xitem;
+                var file = Path.Combine(comboBox1.Text, item.Text);
+                try
+                {
+                    var song = TagLib.File.Create(file, ReadStyle.PictureLazy);
+                    if (string.IsNullOrEmpty(song.Tag.Title)) continue;
+                    var s = Path.GetFileNameWithoutExtension(file);
+                    var newFN = file.Replace(s, (song.Tag.FirstPerformer ?? song.Tag.FirstAlbumArtist) + " - " + song.Tag.Title);
+                    System.IO.File.Move(file, newFN);
+                   
+                }
+                catch (Exception ex) { item.Remove(); }
+            }
+            Cursor = Cursors.Default;
+
+            LoadDir(true);
         }
 
         private void listView1_ItemActivate(object sender, EventArgs e)
@@ -117,5 +137,7 @@ namespace JD
             }
 
         }
+
+       
     }
 }

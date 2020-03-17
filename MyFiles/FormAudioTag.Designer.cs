@@ -36,6 +36,7 @@
             this.btnLookupFolder = new System.Windows.Forms.Button();
             this.btnTags = new System.Windows.Forms.Button();
             this.btnFix = new System.Windows.Forms.Button();
+            this.btnFormatFN = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
@@ -98,19 +99,30 @@
             // 
             // btnFix
             // 
-            this.btnFix.Location = new System.Drawing.Point(576, 11);
+            this.btnFix.Location = new System.Drawing.Point(644, 12);
             this.btnFix.Name = "btnFix";
-            this.btnFix.Size = new System.Drawing.Size(75, 29);
+            this.btnFix.Size = new System.Drawing.Size(108, 26);
             this.btnFix.TabIndex = 8;
-            this.btnFix.Text = "Fix";
+            this.btnFix.Text = "Guess Tag";
             this.btnFix.UseVisualStyleBackColor = true;
             this.btnFix.Click += new System.EventHandler(this.btnFix_Click);
+            // 
+            // btnFormatFN
+            // 
+            this.btnFormatFN.Location = new System.Drawing.Point(514, 11);
+            this.btnFormatFN.Name = "btnFormatFN";
+            this.btnFormatFN.Size = new System.Drawing.Size(124, 27);
+            this.btnFormatFN.TabIndex = 9;
+            this.btnFormatFN.Text = "Format file name";
+            this.btnFormatFN.UseVisualStyleBackColor = true;
+            this.btnFormatFN.Click += new System.EventHandler(this.bntFormatFN_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 543);
+            this.Controls.Add(this.btnFormatFN);
             this.Controls.Add(this.btnFix);
             this.Controls.Add(this.btnTags);
             this.Controls.Add(this.btnLookupFolder);
@@ -134,6 +146,7 @@
         private System.Windows.Forms.Button btnTags;
         private System.Windows.Forms.ColumnHeader ColumnHeader1;
         private System.Windows.Forms.Button btnFix;
+        private System.Windows.Forms.Button btnFormatFN;
     }
 }
 
