@@ -5,6 +5,8 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ApplicationIcon>suche.ico</ApplicationIcon>
+    <AssemblyName>MusicFilesFNChanger</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
