@@ -52,10 +52,10 @@
             // labelNowTime
             // 
             this.labelNowTime.AutoSize = true;
-            this.labelNowTime.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelNowTime.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelNowTime.Location = new System.Drawing.Point(13, 48);
             this.labelNowTime.Name = "labelNowTime";
-            this.labelNowTime.Size = new System.Drawing.Size(129, 23);
+            this.labelNowTime.Size = new System.Drawing.Size(95, 19);
             this.labelNowTime.TabIndex = 0;
             this.labelNowTime.Text = "labelNowTime";
             // 
@@ -73,7 +73,7 @@
             this.labelSongName.AutoSize = true;
             this.labelSongName.Location = new System.Drawing.Point(15, 9);
             this.labelSongName.Name = "labelSongName";
-            this.labelSongName.Size = new System.Drawing.Size(125, 20);
+            this.labelSongName.Size = new System.Drawing.Size(101, 17);
             this.labelSongName.TabIndex = 8;
             this.labelSongName.Text = "labelSongName";
             // 
@@ -83,13 +83,13 @@
             this.comboBoxOutputDriver.Location = new System.Drawing.Point(426, 1);
             this.comboBoxOutputDriver.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.comboBoxOutputDriver.Name = "comboBoxOutputDriver";
-            this.comboBoxOutputDriver.Size = new System.Drawing.Size(79, 28);
+            this.comboBoxOutputDriver.Size = new System.Drawing.Size(79, 25);
             this.comboBoxOutputDriver.TabIndex = 2;
             this.comboBoxOutputDriver.Visible = false;
             // 
             // label1
             // 
-            this.label1.Image = global::JD.MF.Properties.Resources.speaker;
+            this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
             this.label1.Location = new System.Drawing.Point(324, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 40);
@@ -99,7 +99,7 @@
             // buttonOpen
             // 
             this.buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonOpen.Image = global::JD.MF.Properties.Resources.musik;
+            this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
             this.buttonOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonOpen.Location = new System.Drawing.Point(225, 39);
             this.buttonOpen.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -115,7 +115,7 @@
             // 
             this.buttonStop.BackColor = System.Drawing.SystemColors.Control;
             this.buttonStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonStop.Image = global::JD.MF.Properties.Resources.halt;
+            this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
             this.buttonStop.Location = new System.Drawing.Point(178, 39);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonStop.Name = "buttonStop";
@@ -128,7 +128,7 @@
             // 
             this.buttonPlay.BackColor = System.Drawing.SystemColors.Control;
             this.buttonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonPlay.Image = global::JD.MF.Properties.Resources.play_taste;
+            this.buttonPlay.Image = ((System.Drawing.Image)(resources.GetObject("buttonPlay.Image")));
             this.buttonPlay.Location = new System.Drawing.Point(131, 39);
             this.buttonPlay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonPlay.Name = "buttonPlay";
@@ -143,7 +143,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBar1.Location = new System.Drawing.Point(12, 95);
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(476, 56);
+            this.trackBar1.Size = new System.Drawing.Size(476, 45);
             this.trackBar1.TabIndex = 11;
             this.trackBar1.TickFrequency = 10;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -151,7 +151,7 @@
             // 
             // FormPlayer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 127);
             this.Controls.Add(this.trackBar1);
@@ -163,7 +163,7 @@
             this.Controls.Add(this.volumeSlider1);
             this.Controls.Add(this.comboBoxOutputDriver);
             this.Controls.Add(this.labelNowTime);
-            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

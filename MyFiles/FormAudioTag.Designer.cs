@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.lv = new System.Windows.Forms.ListView();
-            this.ColumnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColumnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnLookupFolder = new System.Windows.Forms.Button();
             this.btnTags = new System.Windows.Forms.Button();
@@ -60,6 +60,7 @@
             // 
             // ColumnHeader1
             // 
+            this.ColumnHeader1.Name = "ColumnHeader1";
             this.ColumnHeader1.Text = "Name";
             this.ColumnHeader1.Width = 265;
             // 
@@ -80,7 +81,7 @@
             // btnLookupFolder
             // 
             this.btnLookupFolder.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnLookupFolder.Image = global::JD.MF.Properties.Resources.lupe_suchen;
+            this.btnLookupFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnLookupFolder.Image")));
             this.btnLookupFolder.Location = new System.Drawing.Point(369, 11);
             this.btnLookupFolder.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnLookupFolder.Name = "btnLookupFolder";
@@ -159,7 +160,7 @@
             this.Controls.Add(this.btnLookupFolder);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lv);
-            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
