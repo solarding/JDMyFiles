@@ -12,6 +12,7 @@ namespace JD
         public Form1()
         {
             InitializeComponent();
+            cbSizeOption.SelectedIndex = 1;
             comboBox1.Items.Add(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));
             GenerateColumns(false);
         }
@@ -39,17 +40,17 @@ namespace JD
         private float _sizeOption = 1024.0f;
         private void cbSizeOption_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var option = cbSizeOption.Text.ToUpper();
+            var option = cbSizeOption.Text.ToUpper()[^2..];
             float newSizeOption;
-            if (option.EndsWith("GB"))
+            if (option == "GB")
                 newSizeOption = 1024 * 1024 * 1024f;
-            else if (option.EndsWith("MB"))
+            else if (option == "MB")
                 newSizeOption = 1024 * 1024f;
             else if (option.EndsWith("KB"))
                 newSizeOption = 1024f;
             else
                 newSizeOption = 1;
-            if (Math.Abs(newSizeOption - _sizeOption)<0.001) return;
+            if (Math.Abs(newSizeOption - _sizeOption) < 0.001) return;
             _sizeOption = newSizeOption;
             lv.Columns[1].Text = $"Size({option})";
             ReloadFiles();
@@ -77,7 +78,7 @@ namespace JD
             foreach (var file in files)
             {
                 var item = lv.Items.Add(file.Name, string.IsNullOrEmpty(file.Extension) ? "" : file.Extension.Substring(1).ToLower());
-                item.SubItems.Add((file.Length/_sizeOption).ToString("#,#.###"));
+                item.SubItems.Add((file.Length/_sizeOption).ToString("#,#.##"));
                 if (!readTag)  continue;  
                 
                 try
@@ -152,14 +153,30 @@ namespace JD
                 return;
             }
 
-            using (var formPlayer = new FormPlayer(filename))
-            {
-                formPlayer.StartPosition = FormStartPosition.CenterParent;               
-                formPlayer.ShowDialog(this);
-            }
+            using var formPlayer = new FormPlayer(filename);
+            formPlayer.StartPosition = FormStartPosition.CenterParent;
+            formPlayer.ShowDialog(this);
 
         }
 
+        private void btnDoRename_Click(object sender, EventArgs e)
+        {
+            var files = new DirectoryInfo(comboBox1.Text).GetFiles();
+            foreach (var file in files)
+            {
+                var oldStr = txtReplaceOld.Text;
+                if (!file.Name.Contains(oldStr, StringComparison.InvariantCultureIgnoreCase)) continue;
+                var newFN = file.Name.Replace(oldStr, txtReplaceNew.Text, StringComparison.InvariantCultureIgnoreCase);
+                file.MoveTo(Path.Combine(file.DirectoryName, newFN));
+            }
 
+            ReloadFiles();
+        }
+
+        private void lv_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lv.SelectedIndices.Count == 0) return;
+            txtReplaceOld.Text = lv.SelectedItems[0].Text;
+        }
     }
 }

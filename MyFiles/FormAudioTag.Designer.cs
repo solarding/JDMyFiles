@@ -28,10 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.lv = new System.Windows.Forms.ListView();
             this.ColumnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnLookupFolder = new System.Windows.Forms.Button();
             this.btnTags = new System.Windows.Forms.Button();
@@ -39,30 +45,54 @@
             this.btnFormatFN = new System.Windows.Forms.Button();
             this.chkMedia = new System.Windows.Forms.CheckBox();
             this.cbSizeOption = new System.Windows.Forms.ComboBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnDoRename = new System.Windows.Forms.Button();
+            this.txtReplaceNew = new System.Windows.Forms.TextBox();
+            this.txtReplaceOld = new System.Windows.Forms.TextBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lv
             // 
             this.lv.Activation = System.Windows.Forms.ItemActivation.TwoClick;
+            this.lv.AllowColumnReorder = true;
             this.lv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ColumnHeader1});
+            this.ColumnHeader1,
+            this.columnHeader2});
             this.lv.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lv.FullRowSelect = true;
             this.lv.GridLines = true;
-            this.lv.HideSelection = false;
+            this.lv.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lv.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5});
+            this.lv.LabelEdit = true;
             this.lv.Location = new System.Drawing.Point(0, 105);
             this.lv.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.lv.MultiSelect = false;
             this.lv.Name = "lv";
+            this.lv.ShowGroups = false;
             this.lv.Size = new System.Drawing.Size(959, 438);
             this.lv.TabIndex = 1;
             this.lv.UseCompatibleStateImageBehavior = false;
             this.lv.View = System.Windows.Forms.View.Details;
             this.lv.ItemActivate += new System.EventHandler(this.listView1_ItemActivate);
+            this.lv.SelectedIndexChanged += new System.EventHandler(this.lv_SelectedIndexChanged);
             // 
             // ColumnHeader1
             // 
             this.ColumnHeader1.Name = "ColumnHeader1";
             this.ColumnHeader1.Text = "Name";
             this.ColumnHeader1.Width = 265;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Name = "columnHeader2";
+            this.columnHeader2.Text = "Size";
             // 
             // comboBox1
             // 
@@ -137,7 +167,7 @@
             this.cbSizeOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSizeOption.FormattingEnabled = true;
             this.cbSizeOption.Items.AddRange(new object[] {
-            "in Byte",
+            " B",
             "in KB",
             "in MB",
             "in GB"});
@@ -147,11 +177,58 @@
             this.cbSizeOption.TabIndex = 11;
             this.cbSizeOption.SelectedIndexChanged += new System.EventHandler(this.cbSizeOption_SelectedIndexChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.btnDoRename);
+            this.groupBox1.Controls.Add(this.txtReplaceNew);
+            this.groupBox1.Controls.Add(this.txtReplaceOld);
+            this.groupBox1.Location = new System.Drawing.Point(512, 4);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(428, 78);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "manipulate name";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(138, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(22, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "->";
+            // 
+            // btnDoRename
+            // 
+            this.btnDoRename.Location = new System.Drawing.Point(302, 25);
+            this.btnDoRename.Name = "btnDoRename";
+            this.btnDoRename.Size = new System.Drawing.Size(40, 26);
+            this.btnDoRename.TabIndex = 2;
+            this.btnDoRename.Text = "Go";
+            this.btnDoRename.UseVisualStyleBackColor = true;
+            this.btnDoRename.Click += new System.EventHandler(this.btnDoRename_Click);
+            // 
+            // txtReplaceNew
+            // 
+            this.txtReplaceNew.Location = new System.Drawing.Point(163, 25);
+            this.txtReplaceNew.Name = "txtReplaceNew";
+            this.txtReplaceNew.Size = new System.Drawing.Size(120, 23);
+            this.txtReplaceNew.TabIndex = 1;
+            // 
+            // txtReplaceOld
+            // 
+            this.txtReplaceOld.Location = new System.Drawing.Point(6, 25);
+            this.txtReplaceOld.Name = "txtReplaceOld";
+            this.txtReplaceOld.Size = new System.Drawing.Size(128, 23);
+            this.txtReplaceOld.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 543);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cbSizeOption);
             this.Controls.Add(this.chkMedia);
             this.Controls.Add(this.btnFormatFN);
@@ -165,6 +242,8 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Audio Tag";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -182,6 +261,12 @@
         private System.Windows.Forms.Button btnFormatFN;
         private System.Windows.Forms.CheckBox chkMedia;
         private System.Windows.Forms.ComboBox cbSizeOption;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtReplaceNew;
+        private System.Windows.Forms.TextBox txtReplaceOld;
+        private System.Windows.Forms.Button btnDoRename;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 

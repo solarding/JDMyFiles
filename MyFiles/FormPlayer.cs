@@ -1,12 +1,5 @@
 ﻿using NAudio.Wave;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace JD.MF
@@ -89,8 +82,9 @@ namespace JD.MF
             {
                 Volume = volumeSlider1.Volume,    
                 CurrentTime = TimeSpan.FromSeconds(10)
-            };           
+            };
             
+            if (wavePlayer == null) wavePlayer = CreateWavePlayer();
             wavePlayer.Init(audioFileReader);
             trackBar1.Maximum = (int)audioFileReader.TotalTime.TotalSeconds;
             wavePlayer.PlaybackStopped += OnPlaybackStopped;
