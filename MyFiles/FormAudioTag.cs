@@ -1,4 +1,5 @@
 ﻿using JD.MF;
+using MediaDevices;
 using System;
 using System.IO;
 using System.Linq;
@@ -69,14 +70,14 @@ namespace JD
         private void ReloadFiles()
         {
             bool readTag = chkMedia.Checked;
-
+            var location = comboBox1.Text;
             Cursor = Cursors.WaitCursor;
             if (readTag) GenerateColumns(true);
             lv.Items.Clear();
             lv.BeginUpdate();
             try
             {
-                var files = new DirectoryInfo(comboBox1.Text)?.GetFiles();
+                var files = new DirectoryInfo(location)?.GetFiles();
                 foreach (var file in files)
                 {
                     var item = lv.Items.Add(file.Name, string.IsNullOrEmpty(file.Extension) ? "" : file.Extension.Substring(1).ToLower());
@@ -94,7 +95,31 @@ namespace JD
             }
             catch (DirectoryNotFoundException)
             {
+                //This PC\Jianyang's Galaxy S20\Phone\Music
+                if (location.Contains("\\")) //try devices
+                {
+                    var locations = location.Split("\\");
+                    var devices = MediaDevice.GetDevices();
+                    using var device = devices.First(d => d.FriendlyName == locations[1]);
+                    device.Connect();                    
+                    var dir = device.GetDirectoryInfo(string.Join('\\', locations[2..]));//\Phone\Music
+                    var files = dir.EnumerateFiles("*.*", SearchOption.AllDirectories);
+                    foreach (var file in files)
+                    {
+                        var item = lv.Items.Add(file.Name);
+                        item.SubItems.Add((file.Length / _sizeOption).ToString("#,#.##"));
+                        if (!readTag) continue;
 
+                        try
+                        {
+                            var song = TagLib.File.Create(file.FullName, ReadStyle.PictureLazy);
+                            item.SubItems.Add(song.Tag.Title);
+                            item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault() ?? song.Tag.FirstPerformer);
+                        }
+                        catch { }
+                    }                   
+                    device.Disconnect();
+                }
             }
             lv.EndUpdate();
             Cursor = Cursors.Default;
@@ -142,7 +167,7 @@ namespace JD
                     System.IO.File.Move(file, newFN);
                    
                 }
-                catch (Exception ex) { item.Remove(); }
+                catch { item.Remove(); }
             }
             Cursor = Cursors.Default;
 
@@ -168,11 +193,37 @@ namespace JD
 
         private void btnDoRename_Click(object sender, EventArgs e)
         {
+            var location = comboBox1.Text;
+            try
+            {
+                var files = new DirectoryInfo(location).GetFiles();
+                RenameFiles(files);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                //This PC\Jianyang's Galaxy S20\Phone\Music
+                if (location.Contains("\\")) //try devices
+                {
+                    var locations = location.Split("\\");
+                    var devices = MediaDevice.GetDevices();
+                    using var device = devices.First(d => d.FriendlyName == locations[1]);
+                    device.Connect();
+                    var dir = device.GetDirectoryInfo(string.Join('\\', locations[2..]));//\Phone\Music
+                    var files = dir.EnumerateFiles("*.*", SearchOption.AllDirectories);
+                    RenameFiles(files.ToArray());                    
+                    device.Disconnect();
+                }
+            }
+
+            ReloadFiles();
+        }
+
+        private void RenameFiles(FileInfo[] files)
+        {
             string newFN;
-            var files = new DirectoryInfo(comboBox1.Text).GetFiles();
             foreach (var file in files)
             {
-                newFN = null;                
+                newFN = null;
                 if (chkChineseNumber.Checked)
                 {
                     newFN = convertChinese2Number(file.Name);
@@ -190,8 +241,27 @@ namespace JD
                 }
                 if (newFN != null) file.MoveTo(Path.Combine(file.DirectoryName, newFN));
             }
+        }
 
-            ReloadFiles();
+        private void RenameFiles(MediaFileInfo[] files)
+        {
+            string newFN;
+            foreach (var file in files)
+            {
+                newFN = null;
+                if (chkChineseNumber.Checked) newFN = convertChinese2Number(file.Name);
+
+                if (!string.IsNullOrEmpty(txtReplaceOld.Text))
+                {
+                    var oldStr = txtReplaceOld.Text;
+                    if (file.Name.Contains(oldStr, StringComparison.InvariantCultureIgnoreCase))
+                        newFN = file.Name.Replace(oldStr, txtReplaceNew.Text, StringComparison.InvariantCultureIgnoreCase);
+                }
+
+                if (chk2SimplifiedChinese.Checked) newFN = ZH.ToSimplified(newFN);
+
+                if (newFN != null) file.Rename(newFN);
+            }
         }
 
         private static string convertChinese2Number(string chineseNumber)
@@ -204,8 +274,6 @@ namespace JD
         {
             if (lv.SelectedIndices.Count == 0) return;
             txtReplaceOld.Text = lv.SelectedItems[0].Text;
-        }
-
-        
+        }      
     }
 }

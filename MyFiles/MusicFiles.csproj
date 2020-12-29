@@ -69,6 +69,7 @@
     <Content Include="suche.ico" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MediaDevices" Version="1.8.0" />
     <PackageReference Include="NAudio" Version="1.10.0" />
     <PackageReference Include="TagLibSharp" Version="2.2.0" />
   </ItemGroup>

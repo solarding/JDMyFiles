@@ -26,9 +26,13 @@ namespace JD.MF
         /// <returns>转换完成后的字符串</returns>
         public static string ToSimplified(string source)
         {
-            String target = new String(' ', source.Length);
-            int ret = LCMapString(LOCALE_SYSTEM_DEFAULT, LCMAP_SIMPLIFIED_CHINESE, source, source.Length, target, source.Length);
-            return target;
+            try
+            {
+                String target = new String(' ', source.Length);
+                int ret = LCMapString(LOCALE_SYSTEM_DEFAULT, LCMAP_SIMPLIFIED_CHINESE, source, source.Length, target, source.Length);
+                return target;
+            }
+            catch { return source; };
         }
 
         /// <summary>
