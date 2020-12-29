@@ -74,20 +74,27 @@ namespace JD
             if (readTag) GenerateColumns(true);
             lv.Items.Clear();
             lv.BeginUpdate();
-            var files = new DirectoryInfo(comboBox1.Text).GetFiles();
-            foreach (var file in files)
+            try
             {
-                var item = lv.Items.Add(file.Name, string.IsNullOrEmpty(file.Extension) ? "" : file.Extension.Substring(1).ToLower());
-                item.SubItems.Add((file.Length/_sizeOption).ToString("#,#.##"));
-                if (!readTag)  continue;  
-                
-                try
+                var files = new DirectoryInfo(comboBox1.Text)?.GetFiles();
+                foreach (var file in files)
                 {
-                    var song = TagLib.File.Create(file.FullName, ReadStyle.PictureLazy);                    
-                    item.SubItems.Add(song.Tag.Title);
-                    item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault()??song.Tag.FirstPerformer);
+                    var item = lv.Items.Add(file.Name, string.IsNullOrEmpty(file.Extension) ? "" : file.Extension.Substring(1).ToLower());
+                    item.SubItems.Add((file.Length / _sizeOption).ToString("#,#.##"));
+                    if (!readTag) continue;
+
+                    try
+                    {
+                        var song = TagLib.File.Create(file.FullName, ReadStyle.PictureLazy);
+                        item.SubItems.Add(song.Tag.Title);
+                        item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault() ?? song.Tag.FirstPerformer);
+                    }
+                    catch { }
                 }
-                catch { }
+            }
+            catch (DirectoryNotFoundException)
+            {
+
             }
             lv.EndUpdate();
             Cursor = Cursors.Default;
@@ -161,16 +168,36 @@ namespace JD
 
         private void btnDoRename_Click(object sender, EventArgs e)
         {
+            string newFN;
             var files = new DirectoryInfo(comboBox1.Text).GetFiles();
             foreach (var file in files)
             {
-                var oldStr = txtReplaceOld.Text;
-                if (!file.Name.Contains(oldStr, StringComparison.InvariantCultureIgnoreCase)) continue;
-                var newFN = file.Name.Replace(oldStr, txtReplaceNew.Text, StringComparison.InvariantCultureIgnoreCase);
-                file.MoveTo(Path.Combine(file.DirectoryName, newFN));
+                newFN = null;                
+                if (chkChineseNumber.Checked)
+                {
+                    newFN = convertChinese2Number(file.Name);
+                }
+                if (!string.IsNullOrEmpty(txtReplaceOld.Text))
+                {
+                    var oldStr = txtReplaceOld.Text;
+
+                    if (!file.Name.Contains(oldStr, StringComparison.InvariantCultureIgnoreCase)) continue;
+                    newFN = file.Name.Replace(oldStr, txtReplaceNew.Text, StringComparison.InvariantCultureIgnoreCase);
+                }
+                if (chk2SimplifiedChinese.Checked)
+                {
+                    newFN = ZH.ToSimplified(newFN);
+                }
+                if (newFN != null) file.MoveTo(Path.Combine(file.DirectoryName, newFN));
             }
 
             ReloadFiles();
+        }
+
+        private static string convertChinese2Number(string chineseNumber)
+        {
+            var num = ZH.Word2Number(chineseNumber, "第", "集");
+            return num;
         }
 
         private void lv_SelectedIndexChanged(object sender, EventArgs e)
@@ -178,5 +205,7 @@ namespace JD
             if (lv.SelectedIndices.Count == 0) return;
             txtReplaceOld.Text = lv.SelectedItems[0].Text;
         }
+
+        
     }
 }

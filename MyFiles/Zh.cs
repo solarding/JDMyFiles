@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace JD.MF
@@ -59,5 +60,71 @@ namespace JD.MF
             }
             return new string(c);
         }
+
+
+        #region 中文转阿拉伯数字
+        /// <summary>
+        /// e.g. 第二十二个   第 begin  个 end
+        /// </summary>
+        /// <param name="w"></param>
+        /// <param name="begin">identifier for the begining  比如 第一百集</param>
+        /// <param name="end">identifier for the end, e.g 集</param>
+        /// <returns></returns>
+        public static string Word2Number(string w, string begin = "^", string end = "$")
+        {
+            if (w == "")
+                return w;
+
+            var m = Regex.Match(w, $"{begin}([零一二三四五六七八九十百千万]+亿)?([零一二三四五六七八九十百千]+万)?([零一二三四五六七八九十百千]+)?{end}");
+            if (m.Success)
+            {
+                var number = (
+                    Convert.ToInt64(foh(m.Result("$1"))) * 100000000 +
+                    Convert.ToInt64(foh(m.Result("$2"))) * 10000 +
+                    Convert.ToInt64(foh(m.Result("$3")))
+                    ).ToString();
+                return w.Replace(m.Value, $"{begin}{number}{end}");
+            }
+            else
+            {
+                return w;
+            }
+        }
+
+        private static int foh(string str)
+        {
+            if (string.IsNullOrEmpty(str)) return 0;
+            string e = "零一二三四五六七八九";
+            string[] ew = new string[] { "十", "百", "千" };
+            string[] ej = new string[] { "万", "亿" };
+
+            int a = 0;
+            if (str.IndexOf(ew[0]) == 0)
+                a = 10;
+            str = Regex.Replace(str, e[0].ToString(), "");
+
+            if (Regex.IsMatch(str, "([" + e + "])$"))
+            {
+                a += e.IndexOf(Regex.Match(str, "([" + e + "])$").Value[0]);
+            }
+
+            if (Regex.IsMatch(str, "([" + e + "])" + ew[0]))
+            {
+                a += e.IndexOf(Regex.Match(str, "([" + e + "])" + ew[0]).Value[0]) * 10;
+            }
+
+            if (Regex.IsMatch(str, "([" + e + "])" + ew[1]))
+            {
+                a += e.IndexOf(Regex.Match(str, "([" + e + "])" + ew[1]).Value[0]) * 100;
+            }
+
+            if (Regex.IsMatch(str, "([" + e + "])" + ew[2]))
+            {
+                a += e.IndexOf(Regex.Match(str, "([" + e + "])" + ew[2]).Value[0]) * 1000;
+            }
+            return a;
+        }
+        
+        #endregion
     }
 }

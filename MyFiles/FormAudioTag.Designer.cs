@@ -46,10 +46,12 @@
             this.chkMedia = new System.Windows.Forms.CheckBox();
             this.cbSizeOption = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkChineseNumber = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnDoRename = new System.Windows.Forms.Button();
             this.txtReplaceNew = new System.Windows.Forms.TextBox();
             this.txtReplaceOld = new System.Windows.Forms.TextBox();
+            this.chk2SimplifiedChinese = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,6 +66,7 @@
             this.lv.FullRowSelect = true;
             this.lv.GridLines = true;
             this.lv.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lv.HideSelection = false;
             this.lv.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
@@ -179,33 +182,45 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chk2SimplifiedChinese);
+            this.groupBox1.Controls.Add(this.chkChineseNumber);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnDoRename);
             this.groupBox1.Controls.Add(this.txtReplaceNew);
             this.groupBox1.Controls.Add(this.txtReplaceOld);
             this.groupBox1.Location = new System.Drawing.Point(512, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(428, 78);
+            this.groupBox1.Size = new System.Drawing.Size(428, 94);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "manipulate name";
             // 
+            // chkChineseNumber
+            // 
+            this.chkChineseNumber.AutoSize = true;
+            this.chkChineseNumber.Location = new System.Drawing.Point(163, 56);
+            this.chkChineseNumber.Name = "chkChineseNumber";
+            this.chkChineseNumber.Size = new System.Drawing.Size(122, 21);
+            this.chkChineseNumber.TabIndex = 5;
+            this.chkChineseNumber.Text = "中文🡆阿拉伯数字";
+            this.chkChineseNumber.UseVisualStyleBackColor = true;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(138, 26);
+            this.label1.Location = new System.Drawing.Point(139, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(22, 17);
+            this.label1.Size = new System.Drawing.Size(19, 17);
             this.label1.TabIndex = 3;
-            this.label1.Text = "->";
+            this.label1.Text = "🡆";
             // 
             // btnDoRename
             // 
-            this.btnDoRename.Location = new System.Drawing.Point(302, 25);
+            this.btnDoRename.Location = new System.Drawing.Point(336, 22);
             this.btnDoRename.Name = "btnDoRename";
-            this.btnDoRename.Size = new System.Drawing.Size(40, 26);
+            this.btnDoRename.Size = new System.Drawing.Size(77, 55);
             this.btnDoRename.TabIndex = 2;
-            this.btnDoRename.Text = "Go";
+            this.btnDoRename.Text = "Rename GO!";
             this.btnDoRename.UseVisualStyleBackColor = true;
             this.btnDoRename.Click += new System.EventHandler(this.btnDoRename_Click);
             // 
@@ -222,6 +237,16 @@
             this.txtReplaceOld.Name = "txtReplaceOld";
             this.txtReplaceOld.Size = new System.Drawing.Size(128, 23);
             this.txtReplaceOld.TabIndex = 0;
+            // 
+            // chk2SimplifiedChinese
+            // 
+            this.chk2SimplifiedChinese.AutoSize = true;
+            this.chk2SimplifiedChinese.Location = new System.Drawing.Point(6, 56);
+            this.chk2SimplifiedChinese.Name = "chk2SimplifiedChinese";
+            this.chk2SimplifiedChinese.Size = new System.Drawing.Size(63, 21);
+            this.chk2SimplifiedChinese.TabIndex = 6;
+            this.chk2SimplifiedChinese.Text = "转简体";
+            this.chk2SimplifiedChinese.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -267,6 +292,8 @@
         private System.Windows.Forms.Button btnDoRename;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.CheckBox chkChineseNumber;
+        private System.Windows.Forms.CheckBox chk2SimplifiedChinese;
     }
 }
 
