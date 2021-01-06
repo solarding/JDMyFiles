@@ -6,7 +6,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ApplicationIcon>suche.ico</ApplicationIcon>
-    <AssemblyName>MusicFilesFNChanger</AssemblyName>
+    <AssemblyName></AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
