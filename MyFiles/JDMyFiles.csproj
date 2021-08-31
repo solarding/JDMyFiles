@@ -11,11 +11,11 @@
 
   <ItemGroup>
     <Compile Update="AudioTagUtil.cs" />
-    <Compile Update="FormAudioTag.cs">
+    <Compile Update="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormAudioTag.Designer.cs">
-      <DependentUpon>FormAudioTag.cs</DependentUpon>
+    <Compile Update="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Update="FormPlayer.cs">
       <SubType>Form</SubType>
@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediaDevices" Version="1.8.0" />
-    <PackageReference Include="NAudio" Version="1.10.0" />
+    <PackageReference Include="NAudio" Version="2.0.1" />
     <PackageReference Include="TagLibSharp" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>

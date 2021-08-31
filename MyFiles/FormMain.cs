@@ -274,6 +274,11 @@ namespace JD
         {
             if (lv.SelectedIndices.Count == 0) return;
             txtReplaceOld.Text = lv.SelectedItems[0].Text;
-        }      
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            lblVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
     }
 }
