@@ -239,7 +239,10 @@ namespace JD
                 {
                     newFN = ZH.ToSimplified(newFN);
                 }
-                if (newFN != null) file.MoveTo(Path.Combine(file.DirectoryName, newFN));
+                if (newFN != null)
+                {
+                    try { file.MoveTo(Path.Combine(file.DirectoryName, newFN)); } catch (Exception) { }
+                }
             }
         }
 

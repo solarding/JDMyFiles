@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\solar\Source\Repos\npoi_2.5.5x\main\NPOI.Core.csproj" />
+    <ProjectReference Include="C:\Users\solar\Source\Repos\npoi_2.5.5x\ooxml\NPOI.OOXML.Core.csproj" />
+    <ProjectReference Include="C:\Users\solar\Source\Repos\npoi_2.5.5x\openxml4Net\NPOI.OpenXml4Net.Core.csproj" />
+    <ProjectReference Include="C:\Users\solar\Source\Repos\npoi_2.5.5x\OpenXmlFormats\NPOI.OpenXmlFormats.Core.csproj" />
+  </ItemGroup>
+
+</Project>
