@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.95.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Temp\ClosedXML-develop\ClosedXML\ClosedXML.csproj" />
     <ProjectReference Include="C:\Users\solar\Source\Repos\npoi_2.5.5x\main\NPOI.Core.csproj" />
     <ProjectReference Include="C:\Users\solar\Source\Repos\npoi_2.5.5x\ooxml\NPOI.OOXML.Core.csproj" />
     <ProjectReference Include="C:\Users\solar\Source\Repos\npoi_2.5.5x\openxml4Net\NPOI.OpenXml4Net.Core.csproj" />

@@ -1,7 +1,7 @@
 ﻿using JD.Finance.Stocks;
 
 
-var xls = new XLSProcessor();
-xls.testc();
+var xls = new ProcessPortfolioBook();
+xls.test();
 
 
