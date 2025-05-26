@@ -8,9 +8,9 @@ using TagLib;
 
 namespace JD
 {
-    public partial class Form1 : Form
+    public partial class FormMain : Form
     {       
-        public Form1()
+        public FormMain()
         {
             InitializeComponent();
             cbSizeOption.SelectedIndex = 1;
@@ -279,7 +279,7 @@ namespace JD
             txtReplaceOld.Text = lv.SelectedItems[0].Text;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             lblVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
