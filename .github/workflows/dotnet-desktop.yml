@@ -55,7 +55,7 @@ jobs:
 
     env:
       Solution_Name: JDMyFiles.sln
-      prj1: JD.PhotoDuplicates.csproj
+      prj1: JD.PhotoDuplicates\JD.PhotoDuplicates.csproj
     steps:
     - name: Checkout
       uses: actions/checkout@v4
