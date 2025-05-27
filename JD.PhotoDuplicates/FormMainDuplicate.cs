@@ -13,7 +13,7 @@ namespace JD.PhotoDuplicates
     {
         private CancellationTokenSource? cancellationTokenSource;
         private readonly ConcurrentDictionary<ulong, List<FileInfo>> hashToFiles = []; // Thread-safe
-        private Dictionary<ulong, string> keepList = [];
+        private readonly Dictionary<ulong, string> keepList = [];
 
         public FormMainDuplicate()
         {
@@ -99,12 +99,12 @@ namespace JD.PhotoDuplicates
                     keep = restOfDups.FirstOrDefault(f => f.Length >= keep.Length && f.Name.Length <= keep.Length && !f.FullName.Contains(dispensableFolder)) ?? keep;
                     restOfDups = duplicates.Except([keep]).ToList();
                 }
-                item.SubItems.Add($"{keep.FullName[rootPath..]} ({(keep.Length / 1024f / 1024f).ToString("#.##")}MB)");
+                item.SubItems.Add($"{keep.FullName[rootPath..]} ({keep.Length / 1024f / 1024f:#.##}MB)");
                 keepList.Add(pair.Key, keep.FullName);
 
                 for (int i = 0; i < restOfDups.Count; i++)
                 {
-                    if (i < 2) item.SubItems.Add($"{restOfDups[i].FullName[rootPath..]} ({(restOfDups[i].Length / 1024f / 1024f).ToString("#.##")}MB)");
+                    if (i < 2) item.SubItems.Add($"{restOfDups[i].FullName[rootPath..]} ({restOfDups[i].Length / 1024f / 1024f:#.##}MB)");
                     else { item.SubItems.AddRange(restOfDups.Skip(2).Select(f => f.FullName[..rootPath]).ToArray()); }
                 }
             }
@@ -167,7 +167,7 @@ namespace JD.PhotoDuplicates
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            lblVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            lblVersion.Text = System.Reflection.Assembly.GetExecutingAssembly()?.GetName()?.Version?.ToString();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -179,13 +179,11 @@ namespace JD.PhotoDuplicates
         {
             lv.Height = this.Height - panel1.Height - 50;
         }
-
-        private ListViewColumnSorter lvwColumnSorter;
+                
         private void lv_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             var column = this.lv.Columns[e.Column];
-            if (column.Tag == null)
-                column.Tag = true;
+            column.Tag ??= true;
             bool asc = (bool)column.Tag;
             this.lv.ListViewItemSorter = new ListViewColumnSorter(e.Column, asc);
             this.lv.Sort();

@@ -1,4 +1,4 @@
-name: .NET Core Desktop (MSIX Build)
+name: .NET Desktop Build (EXE/DLL Release)
 
 on:
   push:
@@ -10,51 +10,38 @@ jobs:
   build:
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [Release]  # Only build Release (no Debug needed for releases)
     runs-on: windows-latest
 
     env:
       Solution_Name: JDMyFiles.sln
-      Wap_Project_Path: JD.PhotoDuplicates\JD.PhotoDuplicates.csproj
-      Wap_Project_Directory: JD.PhotoDuplicates  # Directory where .appxupload is generated
-      Appx_Bundle: Always
-      Appx_Bundle_Platforms: x64|x86  # Specify target platforms
-      Appx_Package_Build_Mode: StoreUpload  # Or 'SideLoad' for testing
-      Package_Certificate_Key_File: GitHubActionsWorkflow.pfx
-      Package_Certificate_Password: ${{ secrets.Pfx_Key }}
+      Project_Path: JD.PhotoDuplicates\JD.PhotoDuplicates.csproj  # Your main project
+      Output_Dir: bin\Release\net8.0-windows  # .NET 8 Windows output folder
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Install .NET 8
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
 
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      # Restore NuGet packages (optional if using `dotnet build` later)
-      - name: Restore dependencies
-        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=${{ matrix.configuration }}
-
-      # Build & Package the WAP project
-      - name: Build MSIX package
+      - name: Restore and Build
         run: |
-          msbuild "$env:Wap_Project_Path" `
-            /p:Configuration=${{ matrix.configuration }} `
-            /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode `
-            /p:AppxBundle=$env:Appx_Bundle `
-            /p:AppxBundlePlatforms="$env:Appx_Bundle_Platforms" `
-            /p:PackageCertificateKeyFile="$env:Package_Certificate_Key_File" `
-            /p:PackageCertificatePassword="$env:Package_Certificate_Password"
+          dotnet restore $env:Solution_Name
+          dotnet build $env:Project_Path --configuration ${{ matrix.configuration }} --no-restore
 
-      # Upload the generated .appxupload or .msixupload
-      - name: Upload MSIX package
+      - name: Zip Binaries
+        run: |
+          $outputPath = "$env:Project_Path\..\$env:Output_Dir"
+          $zipName = "JD.PhotoDuplicates_${{ github.run_number }}.zip"
+          Compress-Archive -Path "$outputPath\*" -DestinationPath $zipName -Force
+          echo "ZIP_PATH=$zipName" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      - name: Upload Release ZIP
         uses: actions/upload-artifact@v4
         with:
-          name: MSIX_Package_${{ matrix.configuration }}
-          path: ${{ env.Wap_Project_Directory }}\AppPackages\**\*.appxupload
+          name: JD.PhotoDuplicates_${{ matrix.configuration }}
+          path: ${{ env.ZIP_PATH }}

@@ -251,10 +251,9 @@ namespace JD.PhotoDuplicates
         #endregion
 
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ListView lv;
-        private System.Windows.Forms.Button btnLookupFolder;
+        private System.Windows.Forms.ListView lv;        
         private System.Windows.Forms.ColumnHeader ColumnHeader1;
-        private System.Windows.Forms.ColumnHeader colDupCount;
+        
         private ColumnHeader Keep;
         private ColumnHeader columnHeader4;
         private Panel panel1;
