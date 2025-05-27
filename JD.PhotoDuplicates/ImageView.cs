@@ -2,13 +2,13 @@ namespace JD.PhotoDuplicates
 {
     public partial class ImageView : Form
     {
-        public ImageView(List<string> filePaths)
+        public ImageView(List<FileInfo> filePaths)
         {
             InitializeComponent();
             InitializeImages(filePaths);
         }
 
-        private void InitializeImages(List<string> filePaths)
+        private void InitializeImages(List<FileInfo> files)
         {
             this.Text = "Duplicate Images";
             this.AutoScroll = true;
@@ -24,35 +24,43 @@ namespace JD.PhotoDuplicates
             };
             this.Controls.Add(panel);
 
-            foreach (var path in filePaths)
-            {
+            foreach (var f in files)
+            {               
                 try
                 {
                     var picBox = new PictureBox
                     {
-                        Image = Image.FromFile(path),
+                        Image = Image.FromFile(f.FullName),
                         SizeMode = PictureBoxSizeMode.Zoom,
-                        Width = 300,
-                        Height = 300,
+                        Width = 350,
+                        Height = 350,
                         Margin = new Padding(10)
                     };
 
-                    var label = new Label
+                    var label1 = new Label
                     {
-                        Text = Path.GetFileName(path),
+                        Text = $"Path: {Path.GetDirectoryName(f.FullName)}",
                         AutoSize = true,
-                        TextAlign = ContentAlignment.MiddleCenter
+                        TextAlign = ContentAlignment.MiddleCenter,                        
+                    };
+                    var label2 = new Label
+                    {
+                        Text = $"Name: {f.Name} ({f.Length / 1024} KB)",
+                        AutoSize = true,
+                        TextAlign = ContentAlignment.MiddleCenter,
                     };
 
                     var container = new Panel
                     {
-                        Width = 300,
-                        Height = 340
+                        Width = 350,
+                        Height = 400
                     };
                     container.Controls.Add(picBox);
-                    container.Controls.Add(label);
+                    container.Controls.Add(label1);
+                    container.Controls.Add(label2);
 
-                    label.Dock = DockStyle.Bottom;
+                    label1.Dock = DockStyle.Bottom;
+                    label2.Dock = DockStyle.Bottom;
                     picBox.Dock = DockStyle.Top;
 
                     panel.Controls.Add(container);
@@ -60,7 +68,7 @@ namespace JD.PhotoDuplicates
                 catch (Exception ex)
                 {
                     // You can optionally log this
-                    Console.WriteLine($"Failed to load image {path}: {ex.Message}");
+                    Console.WriteLine($"Failed to load image {f.FullName}: {ex.Message}");
                 }
             }
         }
