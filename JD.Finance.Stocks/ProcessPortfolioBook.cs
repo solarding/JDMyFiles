@@ -18,23 +18,26 @@ namespace JD.Finance.Stocks
                 var shtAnalysis = workbook.Worksheet("Analysis");
 
                 IXLPivotTable xLPTable = shtAnalysis.PivotTable("PivotTable1");
-               
+                int topRow = xLPTable.TargetCell.Address.RowNumber;
 
-                for (int i = 1; i < 100; i++)
+                for (int i = topRow; i < 100; i++)
                 {
                     var r = shtAnalysis.Row(i);
                     if (r == null) break;
-                    var stockname = r.Cell(1).GetString();
+                    var stockname = r.Cell("S").GetString();
                     if (string.IsNullOrWhiteSpace(stockname) || !dict.ContainsKey(stockname)) continue;
-                    var stockCount = r.Cell(3)?.GetDouble();
-                    if (!stockCount.HasValue || stockCount.Value <= 0) continue;
+                    var stockCount = r.Cell("V").Value.IsText? 0: r.Cell("V").GetDouble();
+                    if (stockCount <= 0) continue;
                     var price = Stock.GetQuote(dict[stockname]);
-                    var marketValue = price * stockCount.Value;
-                    var cellMarketValue = r.Cell(6);
+                    var marketValue = price * stockCount;
+                    var cellMarketValue = r.Cell("F");
                     cellMarketValue.SetValue(marketValue);
                 }
-                shtAnalysis.Row(0).Cell(5).SetValue(DateTime.Today.ToShortDateString());
+                shtAnalysis.Row(1).Cell(5).SetValue(DateTime.Today.ToShortDateString());
+
+                workbook.Save();
             }
+
         }
 
         public Dictionary<string, string> GetStockInfos(XLWorkbook workbook)
