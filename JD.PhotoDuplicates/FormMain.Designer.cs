@@ -1,4 +1,5 @@
-﻿namespace JD.PhotoDuplicates
+﻿
+namespace JD.PhotoDuplicates
 {
     partial class FormMain
     {
@@ -39,22 +40,11 @@
             ColumnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             comboBox1 = new ComboBox();
-            btnTags = new Button();
-            btnFix = new Button();
-            btnFormatFN = new Button();
-            chkMedia = new CheckBox();
-            cbSizeOption = new ComboBox();
-            groupBox1 = new GroupBox();
-            chk2SimplifiedChinese = new CheckBox();
-            chkChineseNumber = new CheckBox();
-            label1 = new Label();
-            btnDoRename = new Button();
-            txtReplaceNew = new TextBox();
-            txtReplaceOld = new TextBox();
+            btnScan = new Button();
             lblVersion = new Label();
             btnLookUpFolder = new Button();
             lblInfo = new Label();
-            groupBox1.SuspendLayout();
+            btnStop = new Button();
             SuspendLayout();
             // 
             // lv
@@ -68,16 +58,15 @@
             lv.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             lv.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5 });
             lv.LabelEdit = true;
-            lv.Location = new Point(0, 105);
+            lv.Location = new Point(0, 75);
             lv.Margin = new Padding(3, 4, 3, 4);
             lv.MultiSelect = false;
             lv.Name = "lv";
             lv.ShowGroups = false;
-            lv.Size = new Size(959, 438);
+            lv.Size = new Size(959, 468);
             lv.TabIndex = 1;
             lv.UseCompatibleStateImageBehavior = false;
             lv.View = View.Details;
-            lv.ItemActivate += listView1_ItemActivate;
             lv.SelectedIndexChanged += lv_SelectedIndexChanged;
             // 
             // ColumnHeader1
@@ -103,131 +92,21 @@
             comboBox1.Size = new Size(349, 25);
             comboBox1.TabIndex = 2;
             comboBox1.Text = "C:\\";
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            comboBox1.KeyDown += comboBox1_KeyDown;
             // 
-            // btnTags
+            // btnScan
             // 
-            btnTags.Location = new Point(401, 11);
-            btnTags.Name = "btnTags";
-            btnTags.Size = new Size(72, 27);
-            btnTags.TabIndex = 4;
-            btnTags.Text = "Scan";
-            btnTags.UseVisualStyleBackColor = true;
-            btnTags.Click += btnTags_Click;
-            // 
-            // btnFix
-            // 
-            btnFix.Location = new Point(144, 45);
-            btnFix.Name = "btnFix";
-            btnFix.Size = new Size(108, 26);
-            btnFix.TabIndex = 8;
-            btnFix.Text = "Guess Tag";
-            btnFix.UseVisualStyleBackColor = true;
-            // 
-            // btnFormatFN
-            // 
-            btnFormatFN.Location = new Point(14, 45);
-            btnFormatFN.Name = "btnFormatFN";
-            btnFormatFN.Size = new Size(124, 27);
-            btnFormatFN.TabIndex = 9;
-            btnFormatFN.Text = "Format file name";
-            btnFormatFN.UseVisualStyleBackColor = true;
-            // 
-            // chkMedia
-            // 
-            chkMedia.AutoSize = true;
-            chkMedia.Location = new Point(274, 49);
-            chkMedia.Name = "chkMedia";
-            chkMedia.Size = new Size(93, 21);
-            chkMedia.TabIndex = 10;
-            chkMedia.Text = "Media Files";
-            chkMedia.UseVisualStyleBackColor = true;
-            // 
-            // cbSizeOption
-            // 
-            cbSizeOption.AutoCompleteMode = AutoCompleteMode.Suggest;
-            cbSizeOption.AutoCompleteSource = AutoCompleteSource.ListItems;
-            cbSizeOption.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbSizeOption.FormattingEnabled = true;
-            cbSizeOption.Items.AddRange(new object[] { " B", "in KB", "in MB", "in GB" });
-            cbSizeOption.Location = new Point(401, 49);
-            cbSizeOption.Name = "cbSizeOption";
-            cbSizeOption.Size = new Size(72, 25);
-            cbSizeOption.TabIndex = 11;
-            cbSizeOption.SelectedIndexChanged += cbSizeOption_SelectedIndexChanged;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(chk2SimplifiedChinese);
-            groupBox1.Controls.Add(chkChineseNumber);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(btnDoRename);
-            groupBox1.Controls.Add(txtReplaceNew);
-            groupBox1.Controls.Add(txtReplaceOld);
-            groupBox1.Location = new Point(496, 4);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(428, 94);
-            groupBox1.TabIndex = 12;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "manipulate name";
-            // 
-            // chk2SimplifiedChinese
-            // 
-            chk2SimplifiedChinese.AutoSize = true;
-            chk2SimplifiedChinese.Location = new Point(6, 56);
-            chk2SimplifiedChinese.Name = "chk2SimplifiedChinese";
-            chk2SimplifiedChinese.Size = new Size(63, 21);
-            chk2SimplifiedChinese.TabIndex = 6;
-            chk2SimplifiedChinese.Text = "转简体";
-            chk2SimplifiedChinese.UseVisualStyleBackColor = true;
-            // 
-            // chkChineseNumber
-            // 
-            chkChineseNumber.AutoSize = true;
-            chkChineseNumber.Location = new Point(163, 56);
-            chkChineseNumber.Name = "chkChineseNumber";
-            chkChineseNumber.Size = new Size(122, 21);
-            chkChineseNumber.TabIndex = 5;
-            chkChineseNumber.Text = "中文🡆阿拉伯数字";
-            chkChineseNumber.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(139, 28);
-            label1.Name = "label1";
-            label1.Size = new Size(19, 17);
-            label1.TabIndex = 3;
-            label1.Text = "🡆";
-            // 
-            // btnDoRename
-            // 
-            btnDoRename.Location = new Point(336, 22);
-            btnDoRename.Name = "btnDoRename";
-            btnDoRename.Size = new Size(77, 55);
-            btnDoRename.TabIndex = 2;
-            btnDoRename.Text = "Rename GO!";
-            btnDoRename.UseVisualStyleBackColor = true;
-            // 
-            // txtReplaceNew
-            // 
-            txtReplaceNew.Location = new Point(163, 25);
-            txtReplaceNew.Name = "txtReplaceNew";
-            txtReplaceNew.Size = new Size(120, 23);
-            txtReplaceNew.TabIndex = 1;
-            // 
-            // txtReplaceOld
-            // 
-            txtReplaceOld.Location = new Point(6, 25);
-            txtReplaceOld.Name = "txtReplaceOld";
-            txtReplaceOld.Size = new Size(128, 23);
-            txtReplaceOld.TabIndex = 0;
+            btnScan.Location = new Point(401, 11);
+            btnScan.Name = "btnScan";
+            btnScan.Size = new Size(72, 27);
+            btnScan.TabIndex = 4;
+            btnScan.Text = "Scan";
+            btnScan.UseVisualStyleBackColor = true;
+            btnScan.Click += btnScan_Click;
             // 
             // lblVersion
             // 
             lblVersion.AutoSize = true;
-            lblVersion.Location = new Point(16, 82);
+            lblVersion.Location = new Point(14, 42);
             lblVersion.Name = "lblVersion";
             lblVersion.Size = new Size(42, 17);
             lblVersion.TabIndex = 13;
@@ -240,7 +119,7 @@
             btnLookUpFolder.Location = new Point(369, 11);
             btnLookUpFolder.Margin = new Padding(3, 4, 3, 4);
             btnLookUpFolder.Name = "btnLookUpFolder";
-            btnLookUpFolder.Size = new Size(26, 27);
+            btnLookUpFolder.Size = new Size(26, 26);
             btnLookUpFolder.TabIndex = 14;
             btnLookUpFolder.UseVisualStyleBackColor = false;
             btnLookUpFolder.Click += btnLookupFolder_Click;
@@ -249,35 +128,40 @@
             // 
             lblInfo.AutoSize = true;
             lblInfo.Font = new Font("Microsoft YaHei", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblInfo.Location = new Point(144, 82);
+            lblInfo.Location = new Point(142, 42);
             lblInfo.Name = "lblInfo";
             lblInfo.Size = new Size(16, 16);
             lblInfo.TabIndex = 15;
             lblInfo.Text = "...";
+            // 
+            // btnStop
+            // 
+            btnStop.Image = Properties.Resources.Stop_16x;
+            btnStop.Location = new Point(479, 12);
+            btnStop.Margin = new Padding(3, 4, 3, 4);
+            btnStop.Name = "btnStop";
+            btnStop.Size = new Size(26, 26);
+            btnStop.TabIndex = 16;
+            btnStop.UseVisualStyleBackColor = true;
+            btnStop.Click += btnStop_Click;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(959, 543);
+            Controls.Add(btnStop);
             Controls.Add(lblInfo);
             Controls.Add(btnLookUpFolder);
             Controls.Add(lblVersion);
-            Controls.Add(groupBox1);
-            Controls.Add(cbSizeOption);
-            Controls.Add(chkMedia);
-            Controls.Add(btnFormatFN);
-            Controls.Add(btnFix);
-            Controls.Add(btnTags);
+            Controls.Add(btnScan);
             Controls.Add(comboBox1);
             Controls.Add(lv);
             Font = new Font("Microsoft YaHei", 9F);
             Margin = new Padding(3, 4, 3, 4);
             Name = "FormMain";
-            Text = "Audio Tag";
+            Text = "Hunting Duplicate Photos";
             Load += OnFormLoad;
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
 
@@ -289,23 +173,13 @@
         private System.Windows.Forms.ListView lv;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button btnLookupFolder;
-        private System.Windows.Forms.Button btnTags;
+        private System.Windows.Forms.Button btnScan;
         private System.Windows.Forms.ColumnHeader ColumnHeader1;
-        private System.Windows.Forms.Button btnFix;
-        private System.Windows.Forms.Button btnFormatFN;
-        private System.Windows.Forms.CheckBox chkMedia;
-        private System.Windows.Forms.ComboBox cbSizeOption;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtReplaceNew;
-        private System.Windows.Forms.TextBox txtReplaceOld;
-        private System.Windows.Forms.Button btnDoRename;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.CheckBox chkChineseNumber;
-        private System.Windows.Forms.CheckBox chk2SimplifiedChinese;
         private System.Windows.Forms.Label lblVersion;
         private Button btnLookUpFolder;
         private Label lblInfo;
+        private Button btnStop;
     }
 }
 
