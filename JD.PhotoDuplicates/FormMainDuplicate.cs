@@ -204,6 +204,7 @@ namespace JD.PhotoDuplicates
                 foreach (var dup in dupliates.Where(f=>f.FullName != keep.Value))
                 {
                     if (File.Exists(dup.FullName)) dup.Delete(); lblInfo.Text = $"deleted: {dup.FullName}";
+                    Application.DoEvents();
                 }
             }
         }
