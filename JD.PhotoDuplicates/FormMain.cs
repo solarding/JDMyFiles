@@ -38,6 +38,7 @@ namespace JD.PhotoDuplicates
 
         private void ReloadFiles(CancellationToken token, string? location = null)
         {
+            hashToFiles.Clear();
             try
             {
                 var phasher = new PerceptualHash();               
@@ -90,7 +91,7 @@ namespace JD.PhotoDuplicates
                         var item = lv.Items.Add($"{pair.Key:X16}");
                         item.SubItems.Add($"{pair.Value.Count} duplicates)");
                         var duplicates = pair.Value;
-                        var tempFiles = duplicates.Where(f => f.Contains(folders[0][..4], StringComparison.OrdinalIgnoreCase)).ToList();
+                        var tempFiles = duplicates.Where(f => f.Contains(folders[0][5..], StringComparison.OrdinalIgnoreCase)).ToList();
                         var others = duplicates.Except(tempFiles).ToList();
 
                         if (tempFiles.Any())
@@ -114,6 +115,10 @@ namespace JD.PhotoDuplicates
                         }
                     });
                 }                
+            }
+            catch (OperationCanceledException ex)
+            {
+                return; // Handle cancellation gracefully
             }
             catch (DirectoryNotFoundException)
             {
