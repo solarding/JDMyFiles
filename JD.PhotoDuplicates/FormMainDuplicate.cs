@@ -80,7 +80,7 @@ namespace JD.PhotoDuplicates
         private void PostProcessFindings()
         {
             var rootPath = comboBox1.Text.Length;
-            var dispensableFolder = "DCIM";
+            var dispensableFolder = "DCIM"; //TODO in 1.1, make a customizable list of choices. maybe through drag and drop
             keepList.Clear();
 
             lv.BeginUpdate();
@@ -117,6 +117,7 @@ namespace JD.PhotoDuplicates
             lv.Items.Clear();
             btnScan.Enabled = false;
             lblInfo.Text = "Starting scan...";
+            btnStop.Visible = true;
             try
             {
                 var dir = new DirectoryInfo(location);
@@ -145,6 +146,7 @@ namespace JD.PhotoDuplicates
 
             lblInfo.Text = "Scan complete.";
             btnScan.Enabled = true;
+            btnStop.Visible = false;
         }
 
 
