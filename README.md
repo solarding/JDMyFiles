@@ -30,9 +30,3 @@ Built with C# and WinForms, this app provides a smooth GUI experience, real-time
 
 ### Requirements
 - Windows 10 or later
-
-### Build from Source
-
-```bash
-git clone https://github.com/solarding/jd-photo-duplicates.git
-cd jd-photo-duplicates
