@@ -30,3 +30,6 @@ Built with C# and WinForms, this app provides a smooth GUI experience, real-time
 
 ### Requirements
 - Windows 10 or later
+
+## 📦 Download
+[Download the latest release](https://github.com/solarding/JDmyfiles/releases/latest)
