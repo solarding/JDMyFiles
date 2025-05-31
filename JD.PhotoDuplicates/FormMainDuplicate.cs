@@ -1,6 +1,7 @@
 ﻿using CoenM.ImageHash.HashAlgorithms;
 using JD.PhotoDuplicates.Gui;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Globalization;
 using System.Net.NetworkInformation;
@@ -12,7 +13,7 @@ namespace JD.PhotoDuplicates
     public partial class FormMainDuplicate : Form
     {
         private CancellationTokenSource? cancellationTokenSource;
-        private readonly ConcurrentDictionary<ulong, List<FileInfo>> hashToFiles = []; // Thread-safe
+        private readonly ConcurrentDictionary<ulong, List<FileInfo>> _hashT = []; // Thread-safe
         private readonly Dictionary<ulong, string> keepList = [];
 
         public FormMainDuplicate()
@@ -29,11 +30,8 @@ namespace JD.PhotoDuplicates
             comboBox1.Items.Add(comboBox1.Text);
         }
 
-        
-
-        private void ScanForDuplicates(FileInfo[] allFiles, CancellationToken token, IProgress<(int, string)> progress)
-        {
-            hashToFiles.Clear();
+        private void ScanForDuplicates(ConcurrentDictionary<ulong, List<FileInfo>>  dict, FileInfo[] allFiles, IProgress<(int, string)> progress, CancellationToken token)
+        {   
             var phasher = new PerceptualHash();
             int processedCount = 0;
 
@@ -41,7 +39,7 @@ namespace JD.PhotoDuplicates
             {
                 var options = new ParallelOptions
                 {
-                    MaxDegreeOfParallelism = (int)(Environment.ProcessorCount * 0.75),
+                    MaxDegreeOfParallelism = (int)(Environment.ProcessorCount * 0.85),
                     CancellationToken = token
                 };
 
@@ -54,15 +52,20 @@ namespace JD.PhotoDuplicates
                     {
                         using var img = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(file.FullName);
                         ulong hash = phasher.Hash(img);
-                        hashToFiles.AddOrUpdate(hash, [file],
-                            (_, list) => { lock (list) list.Add(file); return list; });
+
+                        dict.AddOrUpdate(hash, [file], (_, list) =>
+                            {
+                                lock (list)
+                                    if (!list.Any(f => f.FullName == file.FullName)) list.Add(file);
+                                return list;
+                            });
 
                         //report progress to UI
                         int current = Interlocked.Increment(ref processedCount);
                         if ((DateTime.Now - lastUpdate).TotalMilliseconds > 200)
                         {
                             lastUpdate = DateTime.Now;
-                            progress.Report((current, $"Processing [{hashToFiles.Count}]: {file}"));
+                            progress.Report((current, $"Processing [{dict.Count}]: {file}"));
                         }
                     }
                     catch (Exception ex)
@@ -85,8 +88,11 @@ namespace JD.PhotoDuplicates
 
             lv.BeginUpdate();
             // Process and handle duplicates
-            foreach (var pair in hashToFiles.Where(kvp => kvp.Value.Count > 1))
+            foreach (var pair in _hashT.Where(kvp => kvp.Value.Count > 1))
             {
+                //check again, fl might be deleted somewhere else
+                for (int i = 0; i < pair.Value.Count; i++) { if (pair.Value[i].Exists == false) pair.Value.RemoveAt(i); }
+
                 var item = lv.Items.Add($"{pair.Key:X16}");
                 item.SubItems.Add($"{pair.Value.Count} duplicates)");
                 var duplicates = pair.Value;
@@ -140,7 +146,35 @@ namespace JD.PhotoDuplicates
                     });
                 cancellationTokenSource = new CancellationTokenSource();
                 var token = cancellationTokenSource.Token;
-                await Task.Run(() => ScanForDuplicates(allFiles, token, progress), token);
+
+                if (!_hashT.IsEmpty)
+                {
+                    var result = MessageBox.Show("Do you want to clear the previous findings?", "Clear Findings",
+                        MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    if (result == DialogResult.Yes)
+                    {
+                        _hashT.Clear();
+                        lblInfo.Text = "Previous findings cleared. Starting new scan...";
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        // Create a HashSet of full paths for fast lookups
+                        var existingFilePaths = new HashSet<string>(
+                            _hashT.Values.SelectMany(fl => fl.Select(f => f.FullName)), StringComparer.OrdinalIgnoreCase);
+                        var filteredFiles = allFiles.Where(f => !existingFilePaths.Contains(f.FullName));
+                        allFiles = [.. filteredFiles];
+                        lblInfo.Text = $"Continuing with previous findings. (excluded {existingFilePaths.Count} files)";
+
+                    }
+                    else if (result == DialogResult.Cancel)
+                    {
+                        btnScan.Enabled = true;
+                        btnStop.Visible = false;
+                        return; // User cancelled the operation
+                    }
+                }
+
+                await Task.Run(() => ScanForDuplicates(_hashT, allFiles, progress, token), token);
             }
             catch (Exception ex) { MessageBox.Show(ex.ToString()); }
 
@@ -157,7 +191,7 @@ namespace JD.PhotoDuplicates
             var selectedHash = currentItem.Text;
             if (ulong.TryParse(selectedHash, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var hash))
             {
-                if (hashToFiles.TryGetValue(hash, out var filePaths) && filePaths.Count > 1)
+                if (_hashT.TryGetValue(hash, out var filePaths) && filePaths.Count > 1)
                 {
                     var previewForm = new ImageView(filePaths);
                     previewForm.ShowDialog(); // or .Show() for non-blocking
@@ -179,7 +213,7 @@ namespace JD.PhotoDuplicates
         {
             lv.Height = this.Height - panel1.Height - 50;
         }
-                
+
         private void lv_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             var column = this.lv.Columns[e.Column];
@@ -198,14 +232,52 @@ namespace JD.PhotoDuplicates
 
         private void btnDelDuplicate_Click(object sender, EventArgs e)
         {
-            foreach(var keep in keepList)
+            foreach (var keep in keepList)
             {
-                var dupliates = hashToFiles[keep.Key] ?? throw new Exception($"The to be kept file for {keep.Key} is missing!");
-                foreach (var dup in dupliates.Where(f=>f.FullName != keep.Value))
+                var dupliates = _hashT[keep.Key] ?? throw new Exception($"The to be kept file for {keep.Key} is missing!");
+                foreach (var dup in dupliates.Where(f => f.FullName != keep.Value))
                 {
-                    if (File.Exists(dup.FullName)) dup.Delete(); lblInfo.Text = $"deleted: {dup.FullName}";
-                    Application.DoEvents();
+                    try
+                    {
+                        if (File.Exists(dup.FullName)) dup.Delete(); lblInfo.Text = $"deleted: {dup.FullName}";
+                    }
+                    catch (Exception ex)
+                    {
+                        lblInfo.Text = $"Error deleting {dup.FullName}: {ex.Message}";
+                    }
+                    finally { Application.DoEvents(); }
                 }
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            var saveFileDialog1 = new SaveFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                FileName = "imageHashes.json",
+                DefaultExt = "json"
+            };
+            var rst = saveFileDialog1.ShowDialog(this);
+            if (rst != DialogResult.OK) return;
+            DictionaryStorage.SaveToJson(_hashT, saveFileDialog1.FileName);
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            var openFileDialog1 = new OpenFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                FileName = "imageHashes.json",
+                DefaultExt = "json"
+            };
+            var rst = openFileDialog1.ShowDialog(this);
+            if (rst != DialogResult.OK) return;
+            _hashT.Clear();
+            var loadedData = DictionaryStorage.LoadFromJson(openFileDialog1.FileName);
+            foreach (var kvp in loadedData)
+            {
+                _hashT.TryAdd(kvp.Key, kvp.Value);
             }
         }
     }

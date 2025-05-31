@@ -29,14 +29,14 @@ namespace JD.PhotoDuplicates
         /// </summary>
         private void InitializeComponent()
         {
-            ListViewGroup listViewGroup3 = new ListViewGroup("ListViewGroup", HorizontalAlignment.Left);
-            ListViewGroup listViewGroup4 = new ListViewGroup("ListViewGroup", HorizontalAlignment.Left);
-            ListViewItem listViewItem6 = new ListViewItem("");
-            ListViewItem listViewItem7 = new ListViewItem("");
-            ListViewItem listViewItem8 = new ListViewItem("");
-            ListViewItem listViewItem9 = new ListViewItem("");
-            ListViewItem listViewItem10 = new ListViewItem("");
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMainDuplicate));
+            components = new System.ComponentModel.Container();
+            ListViewGroup listViewGroup1 = new ListViewGroup("ListViewGroup", HorizontalAlignment.Left);
+            ListViewGroup listViewGroup2 = new ListViewGroup("ListViewGroup", HorizontalAlignment.Left);
+            ListViewItem listViewItem1 = new ListViewItem("");
+            ListViewItem listViewItem2 = new ListViewItem("");
+            ListViewItem listViewItem3 = new ListViewItem("");
+            ListViewItem listViewItem4 = new ListViewItem("");
+            ListViewItem listViewItem5 = new ListViewItem("");
             folderBrowserDialog1 = new FolderBrowserDialog();
             lv = new ListView();
             ColumnHeader1 = new ColumnHeader();
@@ -46,6 +46,9 @@ namespace JD.PhotoDuplicates
             columnHeader5 = new ColumnHeader();
             columnHeader6 = new ColumnHeader();
             panel1 = new Panel();
+            btnSave = new Button();
+            btnLoad = new Button();
+            btnDelDuplicate = new Button();
             btnRefreshList = new Button();
             progressBar1 = new ProgressBar();
             btnStop = new Button();
@@ -54,7 +57,7 @@ namespace JD.PhotoDuplicates
             lblVersion = new Label();
             btnScan = new Button();
             comboBox1 = new ComboBox();
-            btnDelDuplicate = new Button();
+            toolTip1 = new ToolTip(components);
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -66,12 +69,12 @@ namespace JD.PhotoDuplicates
             lv.Dock = DockStyle.Bottom;
             lv.FullRowSelect = true;
             lv.GridLines = true;
-            listViewGroup3.Header = "ListViewGroup";
-            listViewGroup3.Name = "listViewGroup1";
-            listViewGroup4.Header = "ListViewGroup";
-            listViewGroup4.Name = "listViewGroup2";
-            lv.Groups.AddRange(new ListViewGroup[] { listViewGroup3, listViewGroup4 });
-            lv.Items.AddRange(new ListViewItem[] { listViewItem6, listViewItem7, listViewItem8, listViewItem9, listViewItem10 });
+            listViewGroup1.Header = "ListViewGroup";
+            listViewGroup1.Name = "listViewGroup1";
+            listViewGroup2.Header = "ListViewGroup";
+            listViewGroup2.Name = "listViewGroup2";
+            lv.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2 });
+            lv.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5 });
             lv.LabelEdit = true;
             lv.Location = new Point(0, 75);
             lv.Margin = new Padding(3, 4, 3, 4);
@@ -119,6 +122,8 @@ namespace JD.PhotoDuplicates
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnSave);
+            panel1.Controls.Add(btnLoad);
             panel1.Controls.Add(btnDelDuplicate);
             panel1.Controls.Add(btnRefreshList);
             panel1.Controls.Add(progressBar1);
@@ -134,11 +139,49 @@ namespace JD.PhotoDuplicates
             panel1.Size = new Size(1157, 72);
             panel1.TabIndex = 17;
             // 
+            // btnSave
+            // 
+            btnSave.BackColor = SystemColors.ButtonHighlight;
+            btnSave.Image = Properties.Resources.SaveStatusBar2_16x;
+            btnSave.Location = new Point(542, 13);
+            btnSave.Margin = new Padding(3, 4, 3, 4);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(26, 26);
+            btnSave.TabIndex = 27;
+            toolTip1.SetToolTip(btnSave, "Save the results as Json");
+            btnSave.UseVisualStyleBackColor = false;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnLoad
+            // 
+            btnLoad.BackColor = SystemColors.ButtonHighlight;
+            btnLoad.Image = Properties.Resources.Open_16x;
+            btnLoad.Location = new Point(574, 13);
+            btnLoad.Margin = new Padding(3, 4, 3, 4);
+            btnLoad.Name = "btnLoad";
+            btnLoad.Size = new Size(26, 26);
+            btnLoad.TabIndex = 26;
+            toolTip1.SetToolTip(btnLoad, "Load saved Json and continue");
+            btnLoad.UseVisualStyleBackColor = false;
+            btnLoad.Click += btnLoad_Click;
+            // 
+            // btnDelDuplicate
+            // 
+            btnDelDuplicate.Image = Properties.Resources.CleanData_16x;
+            btnDelDuplicate.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDelDuplicate.Location = new Point(709, 13);
+            btnDelDuplicate.Name = "btnDelDuplicate";
+            btnDelDuplicate.Size = new Size(161, 26);
+            btnDelDuplicate.TabIndex = 25;
+            btnDelDuplicate.Text = "Delete Non-Kept";
+            btnDelDuplicate.UseVisualStyleBackColor = true;
+            btnDelDuplicate.Click += btnDelDuplicate_Click;
+            // 
             // btnRefreshList
             // 
-            btnRefreshList.Location = new Point(541, 14);
+            btnRefreshList.Location = new Point(606, 13);
             btnRefreshList.Name = "btnRefreshList";
-            btnRefreshList.Size = new Size(97, 25);
+            btnRefreshList.Size = new Size(97, 26);
             btnRefreshList.TabIndex = 24;
             btnRefreshList.Text = "Rebuild List";
             btnRefreshList.UseVisualStyleBackColor = true;
@@ -155,7 +198,7 @@ namespace JD.PhotoDuplicates
             // btnStop
             // 
             btnStop.Image = Properties.Resources.Stop_16x;
-            btnStop.Location = new Point(482, 14);
+            btnStop.Location = new Point(501, 13);
             btnStop.Margin = new Padding(3, 4, 3, 4);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(26, 26);
@@ -177,7 +220,7 @@ namespace JD.PhotoDuplicates
             // btnLookUpFolder
             // 
             btnLookUpFolder.BackColor = SystemColors.ButtonHighlight;
-            btnLookUpFolder.Image = (Image)resources.GetObject("btnLookUpFolder.Image");
+            btnLookUpFolder.Image = Properties.Resources.OpenFolder_16x;
             btnLookUpFolder.Location = new Point(372, 13);
             btnLookUpFolder.Margin = new Padding(3, 4, 3, 4);
             btnLookUpFolder.Name = "btnLookUpFolder";
@@ -198,9 +241,11 @@ namespace JD.PhotoDuplicates
             // 
             // btnScan
             // 
+            btnScan.Image = Properties.Resources.LookupGroup_16x;
+            btnScan.ImageAlign = ContentAlignment.MiddleLeft;
             btnScan.Location = new Point(404, 13);
             btnScan.Name = "btnScan";
-            btnScan.Size = new Size(72, 27);
+            btnScan.Size = new Size(91, 27);
             btnScan.TabIndex = 18;
             btnScan.Text = "Scan";
             btnScan.UseVisualStyleBackColor = true;
@@ -218,16 +263,6 @@ namespace JD.PhotoDuplicates
             comboBox1.Size = new Size(349, 25);
             comboBox1.TabIndex = 17;
             comboBox1.Text = "D:\\Photos";
-            // 
-            // btnDelDuplicate
-            // 
-            btnDelDuplicate.Location = new Point(644, 15);
-            btnDelDuplicate.Name = "btnDelDuplicate";
-            btnDelDuplicate.Size = new Size(161, 25);
-            btnDelDuplicate.TabIndex = 25;
-            btnDelDuplicate.Text = "Delete Non-Kept";
-            btnDelDuplicate.UseVisualStyleBackColor = true;
-            btnDelDuplicate.Click += btnDelDuplicate_Click;
             // 
             // FormMainDuplicate
             // 
@@ -269,6 +304,9 @@ namespace JD.PhotoDuplicates
         private ColumnHeader columnHeader2;
         private Button btnRefreshList;
         private Button btnDelDuplicate;
+        private Button btnSave;
+        private Button btnLoad;
+        private ToolTip toolTip1;
     }
 }
 
