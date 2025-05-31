@@ -49,18 +49,23 @@ namespace JD.PhotoDuplicates
         public static ConcurrentDictionary<ulong, List<FileInfo>> LoadFromJson(string filePath)
         {
             string json = File.ReadAllText(filePath);
-            var loaded = JsonSerializer.Deserialize<Dictionary<ulong, List<FileInfoData>>>(json);
-
-            if (loaded == null)
+            var options = new JsonSerializerOptions
             {
-               MessageBox.Show("The JSON file could not be deserialized.");
-                return new ConcurrentDictionary<ulong, List<FileInfo>>();
-            }
+                PropertyNameCaseInsensitive = true
+            };
+
+            var loaded = JsonSerializer.Deserialize<Dictionary<ulong, List<FileInfoData>>>(json, options)
+                ?? throw new InvalidOperationException("Failed to deserialize JSON");
 
             var result = new ConcurrentDictionary<ulong, List<FileInfo>>();
+
             foreach (var kvp in loaded)
             {
-                result.TryAdd(kvp.Key, kvp.Value.Select(f => f.ToFileInfo()).ToList());
+                var fileInfos = kvp.Value
+                    .Where(f => f != null).Select(f => f?.ToFileInfo())
+                    .Where(f => f != null).ToList()!; // The ! is safe because we filtered nulls
+
+                result.TryAdd(kvp.Key, fileInfos);
             }
 
             return result;
