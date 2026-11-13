@@ -99,7 +99,7 @@ namespace JD
                 if (location.Contains("\\")) //try devices
                 {
                     var locations = location.Split("\\");
-                    var devices = MediaDevice.GetDevices();
+                    var devices = MediaDeviceManager.Instance.GetDevices();
                     using var device = devices.First(d => d.FriendlyName == locations[1]);
                     device.Connect();                    
                     var dir = device.GetDirectoryInfo(string.Join('\\', locations[2..]));//\Phone\Music
@@ -205,7 +205,7 @@ namespace JD
                 if (location.Contains("\\")) //try devices
                 {
                     var locations = location.Split("\\");
-                    var devices = MediaDevice.GetDevices();
+                    var devices = MediaDeviceManager.Instance.GetDevices();
                     using var device = devices.First(d => d.FriendlyName == locations[1]);
                     device.Connect();
                     var dir = device.GetDirectoryInfo(string.Join('\\', locations[2..]));//\Phone\Music
@@ -241,7 +241,15 @@ namespace JD
                 }
                 if (newFN != null)
                 {
-                    try { file.MoveTo(Path.Combine(file.DirectoryName, newFN)); } catch (Exception) { }
+                    try { file.MoveTo(Path.Combine(file.DirectoryName, newFN), chkOverwrite.Checked); }
+                    catch (IOException)
+                    {
+                        MessageBox.Show($"文件 {file.Name} 重命名为 {newFN} 失败，可能是重命名后文件名重复了。", "重命名失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show($"文件 {file.Name} 重命名为 {newFN} 失败，请检查文件是否被占用或权限问题。", "重命名失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }

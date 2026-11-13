@@ -100,7 +100,7 @@ namespace JD.MF
                 case 2:
                     return new WaveOutEvent();
                 case 1:
-                    return new WaveOut(WaveCallbackInfo.FunctionCallback());
+                    return new WaveOut();
                 default:
                     return new WaveOut();
             }

@@ -53,6 +53,7 @@
             txtReplaceNew = new System.Windows.Forms.TextBox();
             txtReplaceOld = new System.Windows.Forms.TextBox();
             lblVersion = new System.Windows.Forms.Label();
+            chkOverwrite = new System.Windows.Forms.CheckBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -171,6 +172,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(chkOverwrite);
             groupBox1.Controls.Add(chk2SimplifiedChinese);
             groupBox1.Controls.Add(chkChineseNumber);
             groupBox1.Controls.Add(label1);
@@ -197,7 +199,7 @@
             // chkChineseNumber
             // 
             chkChineseNumber.AutoSize = true;
-            chkChineseNumber.Location = new System.Drawing.Point(163, 56);
+            chkChineseNumber.Location = new System.Drawing.Point(75, 56);
             chkChineseNumber.Name = "chkChineseNumber";
             chkChineseNumber.Size = new System.Drawing.Size(122, 21);
             chkChineseNumber.TabIndex = 5;
@@ -245,6 +247,16 @@
             lblVersion.Size = new System.Drawing.Size(43, 17);
             lblVersion.TabIndex = 13;
             lblVersion.Text = "label2";
+            // 
+            // chkOverwrite
+            // 
+            chkOverwrite.AutoSize = true;
+            chkOverwrite.Location = new System.Drawing.Point(203, 56);
+            chkOverwrite.Name = "chkOverwrite";
+            chkOverwrite.Size = new System.Drawing.Size(83, 21);
+            chkOverwrite.TabIndex = 7;
+            chkOverwrite.Text = "Overwrite";
+            chkOverwrite.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -294,6 +306,7 @@
         private System.Windows.Forms.CheckBox chkChineseNumber;
         private System.Windows.Forms.CheckBox chk2SimplifiedChinese;
         private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.CheckBox chkOverwrite;
     }
 }
 
