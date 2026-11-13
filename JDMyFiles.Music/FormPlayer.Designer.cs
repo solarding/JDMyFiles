@@ -53,7 +53,7 @@
             // 
             this.labelNowTime.AutoSize = true;
             this.labelNowTime.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelNowTime.Location = new System.Drawing.Point(13, 48);
+            this.labelNowTime.Location = new System.Drawing.Point(13, 20);
             this.labelNowTime.Name = "labelNowTime";
             this.labelNowTime.Size = new System.Drawing.Size(95, 19);
             this.labelNowTime.TabIndex = 0;
@@ -61,17 +61,17 @@
             // 
             // volumeSlider1
             // 
-            this.volumeSlider1.Location = new System.Drawing.Point(360, 39);
+            this.volumeSlider1.Location = new System.Drawing.Point(258, 48);
             this.volumeSlider1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.volumeSlider1.Name = "volumeSlider1";
-            this.volumeSlider1.Size = new System.Drawing.Size(128, 40);
+            this.volumeSlider1.Size = new System.Drawing.Size(140, 48);
             this.volumeSlider1.TabIndex = 3;
             this.volumeSlider1.VolumeChanged += new System.EventHandler(this.OnVolumeSliderChanged);
             // 
             // labelSongName
             // 
             this.labelSongName.AutoSize = true;
-            this.labelSongName.Location = new System.Drawing.Point(15, 9);
+            this.labelSongName.Location = new System.Drawing.Point(15, 5);
             this.labelSongName.Name = "labelSongName";
             this.labelSongName.Size = new System.Drawing.Size(101, 17);
             this.labelSongName.TabIndex = 8;
@@ -90,9 +90,9 @@
             // label1
             // 
             this.label1.Image = ((System.Drawing.Image)(resources.GetObject("label1.Image")));
-            this.label1.Location = new System.Drawing.Point(324, 39);
+            this.label1.Location = new System.Drawing.Point(219, 48);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 40);
+            this.label1.Size = new System.Drawing.Size(32, 48);
             this.label1.TabIndex = 9;
             this.label1.Text = "    ";
             // 
@@ -101,10 +101,10 @@
             this.buttonOpen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
             this.buttonOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonOpen.Location = new System.Drawing.Point(225, 39);
+            this.buttonOpen.Location = new System.Drawing.Point(127, 48);
             this.buttonOpen.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(75, 40);
+            this.buttonOpen.Size = new System.Drawing.Size(85, 48);
             this.buttonOpen.TabIndex = 6;
             this.buttonOpen.Text = "Open";
             this.buttonOpen.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -116,10 +116,10 @@
             this.buttonStop.BackColor = System.Drawing.SystemColors.Control;
             this.buttonStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonStop.Image")));
-            this.buttonStop.Location = new System.Drawing.Point(178, 39);
+            this.buttonStop.Location = new System.Drawing.Point(70, 48);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(40, 40);
+            this.buttonStop.Size = new System.Drawing.Size(50, 48);
             this.buttonStop.TabIndex = 5;
             this.buttonStop.UseVisualStyleBackColor = false;
             this.buttonStop.Click += new System.EventHandler(this.OnButtonStopClick);
@@ -129,10 +129,10 @@
             this.buttonPlay.BackColor = System.Drawing.SystemColors.Control;
             this.buttonPlay.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonPlay.Image = ((System.Drawing.Image)(resources.GetObject("buttonPlay.Image")));
-            this.buttonPlay.Location = new System.Drawing.Point(131, 39);
+            this.buttonPlay.Location = new System.Drawing.Point(13, 48);
             this.buttonPlay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonPlay.Name = "buttonPlay";
-            this.buttonPlay.Size = new System.Drawing.Size(40, 40);
+            this.buttonPlay.Size = new System.Drawing.Size(50, 48);
             this.buttonPlay.TabIndex = 4;
             this.buttonPlay.UseVisualStyleBackColor = false;
             this.buttonPlay.Click += new System.EventHandler(this.buttonPlay_Click);
@@ -141,9 +141,9 @@
             // 
             this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBar1.Location = new System.Drawing.Point(12, 95);
+            this.trackBar1.Location = new System.Drawing.Point(12, 105);
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(476, 45);
+            this.trackBar1.Size = new System.Drawing.Size(526, 45);
             this.trackBar1.TabIndex = 11;
             this.trackBar1.TickFrequency = 10;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -153,7 +153,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 127);
+            this.ClientSize = new System.Drawing.Size(545, 155);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelSongName);

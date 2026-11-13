@@ -76,12 +76,12 @@ namespace JD.PhotoDuplicates
             lv.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2 });
             lv.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3, listViewItem4, listViewItem5 });
             lv.LabelEdit = true;
-            lv.Location = new Point(0, 75);
+            lv.Location = new Point(0, 78);
             lv.Margin = new Padding(3, 4, 3, 4);
             lv.MultiSelect = false;
             lv.Name = "lv";
             lv.ShowGroups = false;
-            lv.Size = new Size(1157, 464);
+            lv.Size = new Size(1157, 461);
             lv.TabIndex = 1;
             lv.UseCompatibleStateImageBehavior = false;
             lv.View = View.Details;
@@ -136,17 +136,17 @@ namespace JD.PhotoDuplicates
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1157, 72);
+            panel1.Size = new Size(1157, 78);
             panel1.TabIndex = 17;
             // 
             // btnSave
             // 
             btnSave.BackColor = SystemColors.ButtonHighlight;
             btnSave.Image = Properties.Resources.SaveStatusBar2_16x;
-            btnSave.Location = new Point(542, 13);
+            btnSave.Location = new Point(553, 12);
             btnSave.Margin = new Padding(3, 4, 3, 4);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(26, 26);
+            btnSave.Size = new Size(32, 32);
             btnSave.TabIndex = 27;
             toolTip1.SetToolTip(btnSave, "Save the results as Json");
             btnSave.UseVisualStyleBackColor = false;
@@ -156,10 +156,10 @@ namespace JD.PhotoDuplicates
             // 
             btnLoad.BackColor = SystemColors.ButtonHighlight;
             btnLoad.Image = Properties.Resources.Open_16x;
-            btnLoad.Location = new Point(574, 13);
+            btnLoad.Location = new Point(591, 12);
             btnLoad.Margin = new Padding(3, 4, 3, 4);
             btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(26, 26);
+            btnLoad.Size = new Size(32, 32);
             btnLoad.TabIndex = 26;
             toolTip1.SetToolTip(btnLoad, "Load saved Json and continue");
             btnLoad.UseVisualStyleBackColor = false;
@@ -169,9 +169,9 @@ namespace JD.PhotoDuplicates
             // 
             btnDelDuplicate.Image = Properties.Resources.CleanData_16x;
             btnDelDuplicate.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDelDuplicate.Location = new Point(709, 13);
+            btnDelDuplicate.Location = new Point(629, 12);
             btnDelDuplicate.Name = "btnDelDuplicate";
-            btnDelDuplicate.Size = new Size(161, 26);
+            btnDelDuplicate.Size = new Size(165, 32);
             btnDelDuplicate.TabIndex = 25;
             btnDelDuplicate.Text = "Delete Non-Kept";
             btnDelDuplicate.UseVisualStyleBackColor = true;
@@ -179,9 +179,9 @@ namespace JD.PhotoDuplicates
             // 
             // btnRefreshList
             // 
-            btnRefreshList.Location = new Point(606, 13);
+            btnRefreshList.Location = new Point(547, 12);
             btnRefreshList.Name = "btnRefreshList";
-            btnRefreshList.Size = new Size(97, 26);
+            btnRefreshList.Size = new Size(100, 32);
             btnRefreshList.TabIndex = 24;
             btnRefreshList.Text = "Rebuild List";
             btnRefreshList.UseVisualStyleBackColor = true;
@@ -190,18 +190,18 @@ namespace JD.PhotoDuplicates
             // progressBar1
             // 
             progressBar1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            progressBar1.Location = new Point(1002, 45);
+            progressBar1.Location = new Point(965, 48);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(152, 15);
+            progressBar1.Size = new Size(180, 15);
             progressBar1.TabIndex = 23;
             // 
             // btnStop
             // 
             btnStop.Image = Properties.Resources.Stop_16x;
-            btnStop.Location = new Point(501, 13);
+            btnStop.Location = new Point(509, 12);
             btnStop.Margin = new Padding(3, 4, 3, 4);
             btnStop.Name = "btnStop";
-            btnStop.Size = new Size(26, 26);
+            btnStop.Size = new Size(32, 32);
             btnStop.TabIndex = 22;
             btnStop.UseVisualStyleBackColor = true;
             btnStop.Visible = false;
@@ -221,10 +221,10 @@ namespace JD.PhotoDuplicates
             // 
             btnLookUpFolder.BackColor = SystemColors.ButtonHighlight;
             btnLookUpFolder.Image = Properties.Resources.OpenFolder_16x;
-            btnLookUpFolder.Location = new Point(372, 13);
+            btnLookUpFolder.Location = new Point(370, 12);
             btnLookUpFolder.Margin = new Padding(3, 4, 3, 4);
             btnLookUpFolder.Name = "btnLookUpFolder";
-            btnLookUpFolder.Size = new Size(26, 26);
+            btnLookUpFolder.Size = new Size(32, 32);
             btnLookUpFolder.TabIndex = 20;
             btnLookUpFolder.UseVisualStyleBackColor = false;
             btnLookUpFolder.Click += btnLookupFolder_Click;
@@ -243,9 +243,9 @@ namespace JD.PhotoDuplicates
             // 
             btnScan.Image = Properties.Resources.LookupGroup_16x;
             btnScan.ImageAlign = ContentAlignment.MiddleLeft;
-            btnScan.Location = new Point(404, 13);
+            btnScan.Location = new Point(408, 12);
             btnScan.Name = "btnScan";
-            btnScan.Size = new Size(91, 27);
+            btnScan.Size = new Size(95, 32);
             btnScan.TabIndex = 18;
             btnScan.Text = "Scan";
             btnScan.UseVisualStyleBackColor = true;
@@ -260,7 +260,7 @@ namespace JD.PhotoDuplicates
             comboBox1.Location = new Point(17, 15);
             comboBox1.Margin = new Padding(3, 4, 3, 4);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(349, 25);
+            comboBox1.Size = new Size(340, 25);
             comboBox1.TabIndex = 17;
             comboBox1.Text = "D:\\Photos";
             // 

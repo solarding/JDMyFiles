@@ -70,6 +70,7 @@ namespace JD
         private void ReloadFiles()
         {
             bool readTag = chkMedia.Checked;
+            bool readDir = chkDir.Checked;
             var location = comboBox1.Text;
             Cursor = Cursors.WaitCursor;
             if (readTag) GenerateColumns(true);
@@ -77,7 +78,9 @@ namespace JD
             lv.BeginUpdate();
             try
             {
-                var files = new DirectoryInfo(location)?.GetFiles();
+                var directory = new DirectoryInfo(location);
+                
+                var files = directory.GetFiles("*");
                 foreach (var file in files)
                 {
                     var item = lv.Items.Add(file.Name, string.IsNullOrEmpty(file.Extension) ? "" : file.Extension.Substring(1).ToLower());
@@ -91,6 +94,16 @@ namespace JD
                         item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault() ?? song.Tag.FirstPerformer);
                     }
                     catch { }
+                }
+
+                if (readDir)
+                {
+                    var dirs = directory.GetDirectories("*", SearchOption.AllDirectories);
+                    foreach (var dir in dirs)
+                    {
+                        var item = lv.Items.Add(dir.Name, "");
+                        item.SubItems.Add("");
+                    }
                 }
             }
             catch (DirectoryNotFoundException)
@@ -196,8 +209,17 @@ namespace JD
             var location = comboBox1.Text;
             try
             {
-                var files = new DirectoryInfo(location).GetFiles();
+                var directory = new DirectoryInfo(location);
+                var files = directory.GetFiles("*", SearchOption.TopDirectoryOnly);
                 RenameFiles(files);
+
+                if (chkDir.Checked)
+                {
+                    var directories = directory.GetDirectories("*", SearchOption.AllDirectories)
+                        .OrderByDescending(d => d.FullName.Length)
+                        .ToArray();
+                    RenameDirectories(directories);
+                }
             }
             catch (DirectoryNotFoundException)
             {
@@ -210,7 +232,7 @@ namespace JD
                     device.Connect();
                     var dir = device.GetDirectoryInfo(string.Join('\\', locations[2..]));//\Phone\Music
                     var files = dir.EnumerateFiles("*.*", SearchOption.AllDirectories);
-                    RenameFiles(files.ToArray());                    
+                    RenameMediaFiles(files.ToArray());                    
                     device.Disconnect();
                 }
             }
@@ -254,7 +276,7 @@ namespace JD
             }
         }
 
-        private void RenameFiles(MediaFileInfo[] files)
+        private void RenameMediaFiles(MediaFileInfo[] files)
         {
             string newFN;
             foreach (var file in files)
@@ -272,6 +294,47 @@ namespace JD
                 if (chk2SimplifiedChinese.Checked) newFN = ZH.ToSimplified(newFN);
 
                 if (newFN != null) file.Rename(newFN);
+            }
+        }
+
+        private void RenameDirectories(DirectoryInfo[] directories)
+        {
+            string newName;
+            foreach (var directory in directories)
+            {
+                newName = null;
+                if (chkChineseNumber.Checked)
+                {
+                    newName = convertChinese2Number(directory.Name);
+                }
+
+                if (!string.IsNullOrEmpty(txtReplaceOld.Text))
+                {
+                    var oldStr = txtReplaceOld.Text;
+                    if (!directory.Name.Contains(oldStr, StringComparison.InvariantCultureIgnoreCase)) continue;
+                    newName = directory.Name.Replace(oldStr, txtReplaceNew.Text, StringComparison.InvariantCultureIgnoreCase);
+                }
+
+                if (chk2SimplifiedChinese.Checked)
+                {
+                    newName = ZH.ToSimplified(newName);
+                }
+
+                if (newName != null)
+                {
+                    try
+                    {
+                        directory.MoveTo(Path.Combine(directory.Parent?.FullName ?? string.Empty, newName));
+                    }
+                    catch (IOException)
+                    {
+                        MessageBox.Show($"文件夹 {directory.Name} 重命名为 {newName} 失败，可能是重命名后文件名重复了。", "重命名失败", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show($"文件夹 {directory.Name} 重命名为 {newName} 失败，请检查文件夹是否被占用或权限问题。", "重命名失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
 
