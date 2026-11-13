@@ -1,6 +1,8 @@
 ﻿using JD.MF;
 using MediaDevices;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,6 +17,20 @@ namespace JD
             InitializeComponent();
             cbSizeOption.SelectedIndex = 1;
             comboBox1.Items.Add(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));
+
+            // Initialize folder icon in ImageList using the MyMusic folder's icon
+            try
+            {
+                var musicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+                Icon folderIcon = Icon.ExtractAssociatedIcon(musicPath) ?? SystemIcons.WinLogo;
+                imageListFolderIcon.Images.Add("folder", folderIcon);
+            }
+            catch
+            {
+                // Fallback to a generic icon if extraction fails
+                imageListFolderIcon.Images.Add("folder", SystemIcons.WinLogo);
+            }
+
             GenerateColumns(false);
         }
 
@@ -39,6 +55,48 @@ namespace JD
         }
 
         private float _sizeOption = 1024.0f;
+        private readonly Dictionary<string, string> _iconCache = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        private string GetIconKeyForFile(string filePath, bool isFolder = false)
+        {
+            if (isFolder)
+                return "folder";
+
+            var extension = Path.GetExtension(filePath).ToLower();
+            if (string.IsNullOrEmpty(extension))
+                extension = "file";
+            else
+                extension = extension.Substring(1); // Remove the dot
+
+            // Check if we already have this icon cached
+            if (_iconCache.ContainsKey(extension))
+                return _iconCache[extension];
+
+            try
+            {
+                // Extract the icon for this file type
+                var icon = Icon.ExtractAssociatedIcon(filePath);
+                if (icon != null)
+                {
+                    // Create a unique key for this file type
+                    var iconKey = $"ext_{extension}";
+
+                    // Add to ImageList if not already there
+                    if (!imageListFolderIcon.Images.ContainsKey(iconKey))
+                    {
+                        imageListFolderIcon.Images.Add(iconKey, icon);
+                    }
+
+                    _iconCache[extension] = iconKey;
+                    return iconKey;
+                }
+            }
+            catch { }
+
+            // Fallback to extension as key if icon extraction fails
+            // The ListView will display the extension text as before
+            return extension;
+        }
         private void cbSizeOption_SelectedIndexChanged(object sender, EventArgs e)
         {
             var option = cbSizeOption.Text.ToUpper()[^2..];
@@ -83,7 +141,8 @@ namespace JD
                 var files = directory.GetFiles("*");
                 foreach (var file in files)
                 {
-                    var item = lv.Items.Add(file.Name, string.IsNullOrEmpty(file.Extension) ? "" : file.Extension.Substring(1).ToLower());
+                    var iconKey = GetIconKeyForFile(file.FullName, false);
+                    var item = lv.Items.Add(file.Name, iconKey);
                     item.SubItems.Add((file.Length / _sizeOption).ToString("#,#.##"));
                     if (!readTag) continue;
 
@@ -101,7 +160,8 @@ namespace JD
                     var dirs = directory.GetDirectories("*", SearchOption.AllDirectories);
                     foreach (var dir in dirs)
                     {
-                        var item = lv.Items.Add(dir.Name, "");
+                        var iconKey = GetIconKeyForFile(dir.FullName, true);
+                        var item = lv.Items.Add(dir.Name, iconKey);
                         item.SubItems.Add("");
                     }
                 }
@@ -119,7 +179,12 @@ namespace JD
                     var files = dir.EnumerateFiles("*.*", SearchOption.AllDirectories);
                     foreach (var file in files)
                     {
-                        var item = lv.Items.Add(file.Name);
+                        var extension = Path.GetExtension(file.Name).ToLower();
+                        if (string.IsNullOrEmpty(extension))
+                            extension = "";
+                        else
+                            extension = extension.Substring(1);
+                        var item = lv.Items.Add(file.Name, extension);
                         item.SubItems.Add((file.Length / _sizeOption).ToString("#,#.##"));
                         if (!readTag) continue;
 
@@ -130,7 +195,7 @@ namespace JD
                             item.SubItems.Add(song.Tag.AlbumArtists.FirstOrDefault() ?? song.Tag.FirstPerformer);
                         }
                         catch { }
-                    }                   
+                    }
                     device.Disconnect();
                 }
             }

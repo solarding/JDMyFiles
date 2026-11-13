@@ -35,6 +35,7 @@
             System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            imageListFolderIcon = new System.Windows.Forms.ImageList(components);
             lv = new System.Windows.Forms.ListView();
             ColumnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
@@ -58,6 +59,13 @@
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
+            // imageListFolderIcon
+            // 
+            imageListFolderIcon.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            imageListFolderIcon.ImageSize = new System.Drawing.Size(16, 16);
+            imageListFolderIcon.TransparentColor = System.Drawing.Color.Transparent;
+            // Folder icon will be added at runtime in FormMain.cs
+            // 
             // lv
             // 
             lv.Activation = System.Windows.Forms.ItemActivation.TwoClick;
@@ -74,6 +82,7 @@
             lv.MultiSelect = false;
             lv.Name = "lv";
             lv.ShowGroups = false;
+            lv.SmallImageList = imageListFolderIcon;
             lv.Size = new System.Drawing.Size(1135, 404);
             lv.TabIndex = 1;
             lv.UseCompatibleStateImageBehavior = false;
@@ -300,6 +309,7 @@
         #endregion
 
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ImageList imageListFolderIcon;
         private System.Windows.Forms.ListView lv;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button btnLookupFolder;
