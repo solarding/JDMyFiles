@@ -63,7 +63,7 @@
             lv.Activation = System.Windows.Forms.ItemActivation.TwoClick;
             lv.AllowColumnReorder = true;
             lv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { ColumnHeader1, columnHeader2 });
-            lv.Dock = System.Windows.Forms.DockStyle.Bottom;
+            lv.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             lv.FullRowSelect = true;
             lv.GridLines = true;
             lv.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
