@@ -34,6 +34,7 @@
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
             System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            components = new System.ComponentModel.Container();
             folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             imageListFolderIcon = new System.Windows.Forms.ImageList(components);
             lv = new System.Windows.Forms.ListView();

@@ -3,6 +3,8 @@ using MediaDevices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -18,21 +20,61 @@ namespace JD
             cbSizeOption.SelectedIndex = 1;
             comboBox1.Items.Add(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));
 
-            // Initialize folder icon in ImageList using the MyMusic folder's icon
-            try
+            // Initialize flat file type icons in ImageList
+            imageListFolderIcon.Images.Add("folder", CreateIcon(Color.FromArgb(0xF4, 0xB9, 0x42), (g, b) =>
             {
-                var musicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-                Icon folderIcon = Icon.ExtractAssociatedIcon(musicPath) ?? SystemIcons.WinLogo;
-                imageListFolderIcon.Images.Add("folder", folderIcon);
-            }
-            catch
+                g.FillRectangle(b, 1, 3, 6, 3);
+                g.FillRectangle(b, 1, 5, 14, 9);
+            }));
+            imageListFolderIcon.Images.Add("music", CreateIcon(Color.FromArgb(0xE8, 0x5D, 0x75), (g, b) =>
             {
-                // Fallback to a generic icon if extraction fails
-                imageListFolderIcon.Images.Add("folder", SystemIcons.WinLogo);
-            }
+                g.FillRectangle(b, 7, 2, 2, 9);
+                g.FillRectangle(b, 12, 1, 2, 8);
+                g.FillRectangle(b, 7, 2, 7, 2);
+                g.FillEllipse(b, 2, 9, 6, 5);
+                g.FillEllipse(b, 9, 8, 6, 5);
+            }));
+            imageListFolderIcon.Images.Add("image", CreateIcon(Color.FromArgb(0x3B, 0x8F, 0xD9), (g, b) =>
+            {
+                g.FillRectangle(b, 1, 2, 14, 12);
+                g.FillEllipse(Brushes.White, 9, 4, 3, 3);
+                g.FillPolygon(Brushes.White, new[] { new Point(2, 13), new Point(6, 8), new Point(9, 11), new Point(11, 9), new Point(14, 13) });
+            }));
+            imageListFolderIcon.Images.Add("video", CreateIcon(Color.FromArgb(0x8E, 0x5B, 0xD6), (g, b) =>
+            {
+                g.FillRectangle(b, 1, 3, 14, 10);
+                g.FillPolygon(Brushes.White, new[] { new Point(6, 6), new Point(6, 10), new Point(10, 8) });
+            }));
+            imageListFolderIcon.Images.Add("txt", CreateIcon(Color.FromArgb(0x60, 0x7D, 0x8B), (g, b) =>
+            {
+                g.FillRectangle(b, 3, 1, 10, 14);
+                g.FillRectangle(Brushes.White, 5, 5, 6, 1);
+                g.FillRectangle(Brushes.White, 5, 8, 6, 1);
+                g.FillRectangle(Brushes.White, 5, 11, 4, 1);
+            }));
 
             GenerateColumns(false);
         }
+
+        private static Bitmap CreateIcon(Color color, Action<Graphics, Brush> draw)
+        {
+            var bitmap = new Bitmap(16, 16, PixelFormat.Format32bppArgb);
+            using var g = Graphics.FromImage(bitmap);
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.Clear(Color.Transparent);
+            using var brush = new SolidBrush(color);
+            draw(g, brush);
+            return bitmap;
+        }
+
+        private static string GetFileTypeKey(string extension) => extension switch
+        {
+            "mp3" or "wav" or "flac" or "m4a" or "aac" or "ogg" or "wma" => "music",
+            "jpg" or "jpeg" or "png" or "gif" or "bmp" or "webp" or "tif" or "tiff" => "image",
+            "mp4" or "avi" or "mkv" or "mov" or "wmv" or "flv" or "webm" or "m4v" => "video",
+            "txt" or "log" or "md" => "txt",
+            _ => null
+        };
 
         private void GenerateColumns(bool isMedia = false)
         {
@@ -67,6 +109,10 @@ namespace JD
                 extension = "file";
             else
                 extension = extension.Substring(1); // Remove the dot
+
+            var typeKey = GetFileTypeKey(extension);
+            if (typeKey != null)
+                return typeKey;
 
             // Check if we already have this icon cached
             if (_iconCache.ContainsKey(extension))
@@ -157,7 +203,7 @@ namespace JD
 
                 if (readDir)
                 {
-                    var dirs = directory.GetDirectories("*", SearchOption.AllDirectories);
+                    var dirs = directory.GetDirectories("*");
                     foreach (var dir in dirs)
                     {
                         var iconKey = GetIconKeyForFile(dir.FullName, true);
